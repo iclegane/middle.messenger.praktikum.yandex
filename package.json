@@ -1,0 +1,23 @@
+{
+  "name": "messanger",
+  "version": "1.0.0",
+  "description": "---",
+  "main": "index.js",
+  "targets": {
+    "main": false
+  },
+  "scripts": {
+    "dev": "parcel ./src/pages/*.hbs --no-cache --port 3000",
+    "start": "parcel build ./src/pages/*.hbs && node ./server.js",
+    "build": "parcel build ./src/pages/*.hbs"
+  },
+  "keywords": [],
+  "author": "iclegane",
+  "license": "ISC",
+  "devDependencies": {
+    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@parcel/transformer-sass": "^2.3.1",
+    "express": "^4.17.2",
+    "parcel": "^2.3.1"
+  }
+}

@@ -1,0 +1,56 @@
+---
+title : 'Настройки'
+
+ 
+inputs: [
+    {name: 'email', value: 'pochta@yandex.ru', display_name: 'Почта', type: 'text'},
+    {name: 'login', value: 'ivanivanov', display_name: 'Логин', type: 'text'},
+    {name: 'first_name', value: 'Иван', display_name: 'Имя', type: 'text'},
+    {name: 'second_name', value: 'Иванов', display_name: 'Фамилия', type: 'text'},
+    {name: 'display_name', value: 'Иван', display_name: 'Имя в чате', type: 'text'},
+    {name: 'phone', value: '+7 (909) 967 30 30', display_name: 'Телефон', type: 'text'},
+    {name: 'avatar', value: '', display_name: 'Аватар', type: 'file'},
+    {name: 'oldPassword', value: '12345', display_name: 'Старый пароль', type: 'password'},
+    {name: 'newPassword', value: '123456', display_name: 'Новый пароль', type: 'password'},
+    {name: 'repeatPassword', value: '123456', display_name: 'Повторите пароль', type: 'password'},
+]
+ 
+---
+
+{{#extend "main"}}
+
+    {{#content "content"}}
+
+        <div class="profile-settings">
+            <div class="profile-settings__container">
+                <div class="profile-settings__head">
+                    <div class="title">{{title}}</div>
+                </div>
+
+                <div class="profile-settings__content">
+                    {{#each inputs as |input|}}
+                        <div class="field">
+                            <div class="field__name">{{input.display_name}}</div>
+                            <div class="field__value">
+                                <input type="{{input.type}}" placeholder="{{input.display_name}}" value="{{input.value}}" name="{{input.name}}">
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+
+                <div class="profile-settings__footer">
+                    <div class="field">
+                        <div class="field__name">
+                            <button class="button button--blue">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-panel">
+            <a href="/src/pages/profile/index.hbs" class="link profile-panel__link">Назад</a>
+        </div>
+
+    {{/content}}
+
+{{/extend}}

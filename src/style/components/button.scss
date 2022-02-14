@@ -1,0 +1,17 @@
+.button {
+    width: 280px;
+    padding: 12px;
+    cursor: pointer;
+    border:none;
+
+    &--round {
+        border-radius: 8px;
+    }
+
+    &--blue {
+        color: $color--white;
+        background: $color--blue;
+    }
+
+ 
+}

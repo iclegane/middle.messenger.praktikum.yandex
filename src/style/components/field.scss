@@ -1,0 +1,16 @@
+.field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $color--light;
+    padding: 10px 0;
+
+    &__name {
+        color: $color--black;
+    }
+
+    &__value {
+        color: $color--gray;
+    }
+}
