@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "parcel ./src/pages/*.hbs --no-cache --port 3000",
-    "start": "npm run build && node ./server.js",
+    "start": "npm run build -port 3000 && node ./server.js",
     "build": "parcel build ./src/pages/*.hbs"
   },
   "keywords": [],
