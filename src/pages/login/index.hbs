@@ -1,0 +1,32 @@
+---
+title : 'Авторизация'
+
+inputs: [
+    {name: login, value: '', type: 'text', display_name: 'Логин', status: ''},
+    {name: password, value: '', type: 'passwprd', display_name: 'Пароль', status: ''},
+    ]
+
+---
+
+{{#extend "main"}}
+    {{#content "content"}}
+    <div class="window">
+        <div class="title">{{title}}</div>
+        <form action="" class="form">
+            <div class="form__wrapper">
+                {{#each inputs as |input|}}
+                <div class="input-group">
+                    <label class="input-group__label" for="{{input.name}}">{{input.display_name}}</label>
+                    <input class="input-group__input" type="{{input.type}}" name="{{input.name}}" id="{{input.name}}">
+                </div>
+                {{/each}}
+
+                <div class="form__controlls">
+                    <button class="button button--round button--blue">Войти</button>
+                    <a class="link link--blue" href="/src/pages/registration/index.hbs">Зарегистрироваться</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    {{/content}}
+{{/extend}}

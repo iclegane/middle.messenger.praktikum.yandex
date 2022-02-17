@@ -1,0 +1,20 @@
+---
+    title : 'Меню'
+---
+ 
+{{#extend "main"}}
+    {{#content "content"}}
+    
+        <nav class="column">
+            <a class="link--blue" href="login/index.hbs">Авторизация</a>
+            <a class="link--blue"  href="registration/index.hbs">Регистрация</a>
+            <a class="link--blue"  href="chat/index.hbs">Чат</a>
+            <a class="link--blue"  href="profile/index.hbs">Профиль</a>
+            <a class="link--blue"  href="profile/change/index.hbs">Настройки профиля</a>
+
+            <a class="link--blue"  href="404/index.hbs">Ошибка 404</a>
+            <a class="link--blue"  href="500/index.hbs">Ошибка 500</a>
+        </nav>
+
+    {{/content}}
+{{/extend}}

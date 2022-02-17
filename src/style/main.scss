@@ -1,0 +1,81 @@
+// settings
+@import '/src/style/utils/fonts.scss';
+@import '/src/style/utils/vars.scss';
+@import '/src/style/utils/global.scss';
+
+// components
+@import '/src/style/components/form.scss';
+@import '/src/style/components/input.scss';
+@import '/src/style/components/button.scss';
+@import '/src/style/components/links.scss';
+@import '/src/style/components/field.scss';
+
+@import '/src/style/components/profile.scss';
+
+
+body {
+    font-family: Inter;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+
+    * {
+        box-sizing: border-box;
+
+        &::after,
+        &::before {
+            box-sizing: border-box;
+        }
+    }
+}
+
+main {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+a {
+    color: $color--gray;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+p {
+    margin: 0 0 11px;
+
+    &:last-child,
+    &:last-of-type {
+        margin: 0;
+    }
+}
+
+.window {
+    position: relative;
+    width: 340px;
+    min-height: 460px;
+    padding: 25px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+    border-radius: 12px;
+}
+
+.title {
+    font-size: $font-size--big;
+    line-height: 20px;
+    text-align: center;
+    color: #1E1E1E;
+    margin: 15px 0;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+
+    a {
+        padding: 15px;
+    }
+}
