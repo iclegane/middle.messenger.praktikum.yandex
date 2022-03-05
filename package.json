@@ -8,8 +8,8 @@
   },
   "scripts": {
     "dev": "parcel ./src/index.html --no-cache --port 3000",
-    "start": "npm run build -port 3000 && node ./server.js",
-    "build": "parcel build ./src/pages/*.hbs"
+    "start": "npm run dev && node ./server.js",
+    "build": "parcel build ./src/index.html"
   },
   "keywords": [],
   "author": "iclegane",
