@@ -3,7 +3,7 @@ export type IInputProps = {
     display_name?: string;
     value?: string | null;
     name: string;
-    pattern?: string;
+    validity?: Record<string, string>;
     required: boolean;
     classes?: string;
     events?: Array<Event>

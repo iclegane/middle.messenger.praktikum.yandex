@@ -1,6 +1,6 @@
-import {ProfilePage} from "../../../blocks/ProfilePage";
-import {renderDOM} from "../../../utils/renderDOM";
-
+import { ProfilePage } from "../../../blocks/ProfilePage";
+import { renderDOM } from "../../../utils/renderDOM";
+import { REGEXP } from "../../../utils/REGEXP";
 
 document.addEventListener('DOMContentLoaded', () => {
     const page = new ProfilePage({
@@ -11,14 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         name: 'oldPassword',
                         type: 'password',
                         display_name: 'Пароль',
-                        pattern: '',
-                        value: '12345',
+                        validity: REGEXP['PASSWORD'],
+                        value: 'dddDD123',
                         required: true,
                     }, {
                         name: 'newPassword',
                         type: 'password',
                         display_name: 'Новый пароль',
-                        pattern: '',
                         value: '12345678910',
                         required: true,
                     }],

@@ -47,7 +47,7 @@ export class Form extends Block {
                     {{#each inputs as |input|}}
                         <div class="input-group">
                             <label class="input-group__label" for={{input.name}}>{{input.display_name}}</label>
-                            {{{ Input type=input.type name=input.name pattern=input.pattern value=input.value required=input.required  events=../events  }}}
+                            {{{ Input type=input.type name=input.name validity=input.validity value=input.value required=input.required  events=../events  }}}
                         </div>
                     {{/each}}
 

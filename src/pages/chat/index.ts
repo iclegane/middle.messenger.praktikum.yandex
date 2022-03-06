@@ -1,5 +1,5 @@
-import {ChatPage} from "../../blocks/ChatPage";
-import {renderDOM} from "../../utils/renderDOM";
+import { ChatPage } from "../../blocks/ChatPage";
+import { renderDOM } from "../../utils/renderDOM";
 
 document.addEventListener('DOMContentLoaded', () => {
     const page = new ChatPage({
