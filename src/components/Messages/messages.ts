@@ -1,10 +1,16 @@
 import Block from "../../utils/Block";
-import {IMessages} from "./types";
-import {registerComponent} from "../../utils/registerComponent";
 import MessagesItem from "./components/messagesItem";
+import { IMessages } from "./types";
+import { registerComponent } from "../../utils/registerComponent";
+
 
 
 export class Messages extends Block {
+
+    static get componentName() : string {
+        return 'Messages';
+    }
+
     constructor({items} : IMessages) {
         super({
             items

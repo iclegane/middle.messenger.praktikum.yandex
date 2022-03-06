@@ -1,10 +1,15 @@
 import Block from "../../utils/Block";
-import {IActionList} from "./types";
-import {registerComponent} from "../../utils/registerComponent";
 import Button from "../Button";
+import { IActionList } from "./types";
+import { registerComponent } from "../../utils/registerComponent";
+
 
 
 export class ActionList extends Block {
+
+    static get componentName() : string {
+        return 'ActionList';
+    }
 
     protected actionClass = 'actions-list__hidden-panel--open';
 
@@ -21,11 +26,9 @@ export class ActionList extends Block {
         });
     }
 
-
     protected toggle(element: HTMLElement) {
         element!.classList.toggle(this.actionClass)
     }
-
 
     get element() {
         return this._element as HTMLInputElement

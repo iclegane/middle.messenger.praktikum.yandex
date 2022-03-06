@@ -1,8 +1,13 @@
 import Block from "../../../../utils/Block";
-import {IMessagesItem} from "./types";
+import { IMessagesItem } from "./types";
 
 
 export class MessagesItem extends Block {
+
+    static get componentName() : string {
+        return 'MessagesItem';
+    }
+
     constructor({name, avatar, message} : IMessagesItem) {
         super({
             name,

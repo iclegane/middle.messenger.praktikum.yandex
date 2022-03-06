@@ -1,16 +1,19 @@
 import Block from "../../utils/Block";
-import {IDialog} from "./types";
-import {registerComponent} from "../../utils/registerComponent";
+import { IDialog } from "./types";
+import { registerComponent } from "../../utils/registerComponent";
 import DialogMessage from "./components/DialogMessage";
 
 export class Dialog extends Block {
+
+    static get componentName() : string {
+        return 'Dialog';
+    }
 
     constructor({groups} : IDialog) {
         super({
             groups
         });
     }
-
 
     protected render(): string {
         registerComponent(DialogMessage)

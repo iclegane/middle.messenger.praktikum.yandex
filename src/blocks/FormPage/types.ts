@@ -1,4 +1,4 @@
-import {IFormProps} from "../../components/Form";
+import { IFormProps } from "../../components/Form";
 
 export type IFormPage = {
     title: string;

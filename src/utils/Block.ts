@@ -10,6 +10,10 @@ class Block {
         FLOW_RENDER: "flow:render"
     };
 
+    static get componentName() : string {
+        return 'Block';
+    }
+
     public id = nanoid(6);
 
     protected _element: HTMLElement | null = null;

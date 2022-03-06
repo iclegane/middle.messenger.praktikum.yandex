@@ -1,5 +1,5 @@
-import {IFormProps} from "../../components/Form";
-import {ILinkProps} from "../../components/Link";
+import { IFormProps } from "../../components/Form";
+import { ILinkProps } from "../../components/Link";
 
 export type IProfileProps = {
     title: string;

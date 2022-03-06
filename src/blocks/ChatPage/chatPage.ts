@@ -1,13 +1,12 @@
 import Block from "../../utils/Block";
-import {IChatPage} from "./types";
-
 import Link from "../../components/Link";
 import Input from "../../components/Input";
 import Messages from "../../components/Messages";
 import ActionList from "../../components/ActionList";
 import Button from "../../components/Button";
 import Dialog from "../../components/Dialog";
-import {registerComponent} from "../../utils/registerComponent";
+import { IChatPage } from "./types";
+import { registerComponent } from "../../utils/registerComponent";
 
 export class ChatPage extends Block {
     constructor({navigation, search, messages, footer_actions, header_actions, dialog}: IChatPage) {

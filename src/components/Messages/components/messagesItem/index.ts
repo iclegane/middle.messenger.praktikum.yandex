@@ -1,2 +1,2 @@
-export {MessagesItem as default} from './messagesItem'
+export { MessagesItem as default } from './messagesItem'
 export * from './types'

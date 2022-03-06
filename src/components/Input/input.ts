@@ -1,8 +1,12 @@
 import Block from '../../utils/Block'
-import {IInputProps} from "./types";
+import { IInputProps } from "./types";
 
 
 export class Input extends Block {
+
+    static get componentName() : string {
+        return 'Input';
+    }
 
     protected readonly errorClass : string = 'input-group__input--invalid';
 
