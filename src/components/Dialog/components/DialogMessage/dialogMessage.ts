@@ -1,10 +1,13 @@
 import Block from "../../../../utils/Block";
-import {IDialogMessage} from "./types";
-
-
+import { IDialogMessage } from "./types";
 
 
 export class DialogMessage extends Block {
+
+    static get componentName() : string {
+        return 'DialogMessage';
+    }
+
     constructor({message_type, meta,  delivery_time, status, isOwner, attachments}: IDialogMessage) {
         super({
             message_type,

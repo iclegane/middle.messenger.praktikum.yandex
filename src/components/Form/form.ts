@@ -1,8 +1,18 @@
 import Block from '../../utils/Block'
-import {getFormData} from "../../utils/getFormData";
-import {IFormProps} from "./types";
+import Input from "../Input";
+import Link from "../Link";
+import Button from "../Button";
+import { IFormProps } from "./types";
+import { getFormData } from "../../utils/getFormData";
+import { registerComponent } from "../../utils/registerComponent";
+
 
 export class Form extends Block {
+
+    static get componentName() : string {
+        return 'Form';
+    }
+
     constructor({inputs, button, link} : IFormProps) {
         super({
             inputs,
@@ -23,10 +33,11 @@ export class Form extends Block {
         });
     }
 
-
-
-
     render(){
+
+        registerComponent(Input);
+        registerComponent(Button);
+        registerComponent(Link);
 
         //language=hbs
         return `

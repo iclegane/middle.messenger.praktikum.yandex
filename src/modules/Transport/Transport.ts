@@ -1,5 +1,5 @@
-import {METHODS_Transport, ITransportMethodsOptions} from './types'
-import {queryStringify} from "../../utils/queryStringify";
+import { METHODS_Transport, ITransportMethodsOptions } from './types'
+import { queryStringify } from "../../utils/queryStringify";
 
 export class Transport {
 

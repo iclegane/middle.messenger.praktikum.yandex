@@ -1,11 +1,10 @@
 import Block from "../../utils/Block";
-import {IProfileProps} from "./types";
-import {registerComponent} from "../../utils/registerComponent";
-
 import Form from "../../components/Form";
 import Link from "../../components/Link";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import { IProfileProps } from "./types";
+import { registerComponent } from "../../utils/registerComponent";
+
+
 
 export class ProfilePage extends Block {
     constructor({title, footer, body, header, navigation}: IProfileProps) {
@@ -22,8 +21,6 @@ export class ProfilePage extends Block {
 
         registerComponent(Form);
         registerComponent(Link);
-        registerComponent(Button);
-        registerComponent(Input);
 
         //language=hbs
         return `

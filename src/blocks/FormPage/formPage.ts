@@ -1,14 +1,7 @@
 import Block from "../../utils/Block";
-
 import Form from "../../components/Form";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
-import Link from "../../components/Link";
-import {IFormPage} from "./types";
-
-import {registerComponent} from "../../utils/registerComponent";
-
-
+import { IFormPage } from "./types";
+import { registerComponent } from "../../utils/registerComponent";
 
 
 export class FormPage extends Block {
@@ -22,9 +15,6 @@ export class FormPage extends Block {
     protected render(): string {
 
         registerComponent(Form);
-        registerComponent(Input);
-        registerComponent(Button);
-        registerComponent(Link);
 
         //language=hbs
         return `
