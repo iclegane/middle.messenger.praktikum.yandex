@@ -8,6 +8,7 @@ import Dialog from "../../components/Dialog";
 import { IChatPage } from "./types";
 import { registerComponent } from "../../utils/registerComponent";
 
+
 export class ChatPage extends Block {
     constructor({navigation, search, messages, footer_actions, header_actions, dialog}: IChatPage) {
         super({

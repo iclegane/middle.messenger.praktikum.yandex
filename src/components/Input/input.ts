@@ -10,12 +10,12 @@ export class Input extends Block {
 
     protected readonly errorClass : string = 'input-group__input--invalid';
 
-    constructor({type = 'text', value, name, pattern, required, classes, display_name, events}: IInputProps) {
+    constructor({type = 'text', value, name, validity, required, classes, display_name, events}: IInputProps) {
         super({
             type,
             value,
             name,
-            pattern,
+            validity,
             required,
             classes,
             display_name,
@@ -25,17 +25,24 @@ export class Input extends Block {
                     const { value } = e.target as HTMLInputElement
                     this.element.value = value;
 
+                    this.element.setCustomValidity('');
+
                     this.validateValue(e);
                 },
                 focus: (e: Event) => {
+
                     if (this.valid) {
                         this.validateValue(e)
                     }
-
                 },
                 blur: () => {
                     this._validate()
                 },
+                invalid: () => {
+                    if (validity) {
+                        this.element.setCustomValidity(validity['DESCRIPTION']);
+                    }
+                }
             }
         });
     }
@@ -73,8 +80,8 @@ export class Input extends Block {
                 placeholder="{{display_name}}"
                 autocomplete="off"
                 value="{{value}}"
-                {{#if pattern}}
-                    pattern="{{pattern}}"
+                {{#if validity}}
+                    pattern="{{validity.PATTERN}}"
                 {{/if}}
                 {{#if required}}
                     required

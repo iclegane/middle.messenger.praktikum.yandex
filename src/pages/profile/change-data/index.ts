@@ -1,5 +1,6 @@
-import {ProfilePage} from "../../../blocks/ProfilePage";
-import {renderDOM} from "../../../utils/renderDOM";
+import { ProfilePage } from "../../../blocks/ProfilePage";
+import { renderDOM } from "../../../utils/renderDOM";
+import { REGEXP } from "../../../utils/REGEXP";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,49 +18,48 @@ document.addEventListener('DOMContentLoaded', () => {
                         name: 'email',
                         type: 'email',
                         display_name: 'Почта',
-                        pattern: '^[a-z0-9_\\-\\.]+@[a-z0-9_\\-]{2,}\\.[a-z0-9_\\-]{2,}$',
+                        validity: REGEXP['EMAIL'],
                         value: 'pochta@yandex.ru',
-                        required: false,
+                        required: true,
                     }, {
                         name: 'login',
                         type: 'text',
                         display_name: 'Логин',
-                        pattern: '^[a-z]{1}[a-z0-9_-]{2,19}$',
+                        validity: REGEXP['LOGIN'],
                         value: 'ivanivanov',
-                        required: false,
+                        required: true,
                     }, {
                         name: 'first_name',
                         type: 'text',
                         display_name: 'Имя',
-                        pattern: '^[A-ZА-Я]+[A-Za-zА-Яа-я\\-]*$',
+                        validity: REGEXP['NAME'],
                         value: 'Иван',
-                        required: false,
+                        required: true,
                     }, {
                         name: 'second_name',
                         type: 'text',
                         display_name: 'Фамилия',
-                        pattern: '^[A-ZА-Я]+[A-Za-zА-Яа-я\\-]*$',
+                        validity: REGEXP['NAME'],
                         value: 'Иванов',
-                        required: false,
+                        required: true,
                     }, {
                         name: 'display_name',
                         type: 'text',
                         display_name: 'Имя в чате',
-                        pattern: '^[A-ZА-Я]+[A-Za-zА-Яа-я\\-]*$',
+                        validity: REGEXP['NAME'],
                         value: 'Иван',
-                        required: false,
+                        required: true,
                     }, {
                         name: 'phone',
                         type: 'text',
                         display_name: 'Телефон',
-                        pattern: '^(\\+?\\d){10,15}$',
+                        validity: REGEXP['PHONE'],
                         value: '+79099673030',
-                        required: false,
+                        required: true,
                     }, {
                         name: 'avatar',
                         type: 'file',
                         display_name: 'Аватар',
-                        pattern: '',
                         value: '',
                         required: false,
                     }

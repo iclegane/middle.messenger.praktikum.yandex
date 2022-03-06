@@ -1,6 +1,6 @@
-import {FormPage} from "../../blocks/FormPage";
-import {renderDOM} from "../../utils/renderDOM";
-
+import { FormPage } from "../../blocks/FormPage";
+import { renderDOM } from "../../utils/renderDOM";
+import { REGEXP } from "../../utils/REGEXP";
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -12,14 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     name: 'login',
                     type: 'text',
                     display_name: 'Логин',
-                    pattern: '^[a-z]{1}[a-z0-9_-]{2,19}$',
+                    validity: REGEXP['LOGIN'],
                     value: '',
                     required: true,
                 }, {
                     name: 'password',
                     type: 'password',
                     display_name: 'Пароль',
-                    pattern: '^(?=.*[A-ZА-Я])(?=.*\\d).{8,40}$',
+                    validity: REGEXP['PASSWORD'],
                     value: '',
                     required: true,
                 }
