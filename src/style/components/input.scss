@@ -14,11 +14,22 @@
         border: none;
         border-bottom: 1px solid $color--blue;
 
+        &--invalid {
+            border-bottom: 1px solid red;
+        }
     }
 
     &__label,
     &__input {
         display: block;
     }
+}
 
+
+.gray-theme-input {
+    width: 100%;
+    background: #EFEFEF;
+    border-radius: 5px;
+    padding: 10px;
+    border: 0;
 }
