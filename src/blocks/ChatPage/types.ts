@@ -18,3 +18,8 @@ export type IChatPage = {
     header_actions?: IActionList,
     dialog?: IDialog;
 }
+
+
+export type createChatFrom = {
+    chatTitle: string;
+}

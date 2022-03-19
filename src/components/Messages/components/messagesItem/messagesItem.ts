@@ -1,5 +1,6 @@
 import Block from "../../../../utils/Block";
 import { IMessagesItem } from "./types";
+import store from "../../../../modules/Store/Store";
 
 
 export class MessagesItem extends Block {
@@ -8,13 +9,29 @@ export class MessagesItem extends Block {
         return 'MessagesItem';
     }
 
-    constructor({name, avatar, message} : IMessagesItem) {
-        super({
+    constructor({chatID, name, avatar, message} : IMessagesItem) {
+        super();
+
+        this.setProps({
+            chatID,
             name,
             avatar,
-            message
-        });
+            message,
+            events: {
+                click: (e: MouseEvent) => {
+                    e.preventDefault();
+
+                    store.set("currentChat", {
+                        id: chatID
+                    })
+
+                }
+            }
+        })
+
     }
+
+
 
     protected render(): string {
 

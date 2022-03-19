@@ -1,6 +1,7 @@
 import EventBus from "./EventBus";
 import { nanoid } from 'nanoid'
 import * as Handlebars from "handlebars";
+import {isEqual} from "./isEqual";
 
 class Block {
     static EVENTS = {
@@ -19,6 +20,9 @@ class Block {
     protected _element: HTMLElement | null = null;
 
     protected props: any;
+
+    protected state: any = {};
+
     protected children: Record<string, Block>;
 
     private eventBus: () => EventBus;
@@ -30,7 +34,8 @@ class Block {
      * @returns {void}
      */
     constructor(propsAndChildren: any = {}) {
-        const eventBus = new EventBus();
+
+        const eventBus = new EventBus;
 
         const {props, children} = this.getChildren(propsAndChildren);
 
@@ -43,7 +48,7 @@ class Block {
         this.eventBus = () => eventBus;
 
         this._registerEvents(eventBus);
-        eventBus.emit(Block.EVENTS.INIT);
+        eventBus.emit(Block.EVENTS.INIT, this.props);
     }
 
     private _registerEvents(eventBus: EventBus) {
@@ -54,7 +59,7 @@ class Block {
     }
 
     init() {
-        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+        this.eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props);
     }
 
     protected initChildren() {}
@@ -70,14 +75,27 @@ class Block {
     }
 
     private _componentDidUpdate(oldProps : any, newProps : any) {
-         if (this.componentDidUpdate(oldProps, newProps)) {
-             this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-         }
+        // const response = this.componentDidUpdate(oldProps, newProps);
+        //
+        // if (response) {
+        //     this._removeEvents()
+        //     this._clearElement()
+        //     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+        // }
+        //
+        // return response;
+
+
+        const response = this.componentDidUpdate(oldProps, newProps);
+        if (!response) {
+            return;
+        }
+        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
     //@ts-ignore
     componentDidUpdate(oldProps : any, newProps : any) {
-        return true;
+        return !isEqual(newProps, oldProps)
     }
 
     setProps = (nextProps: any) => {
@@ -86,6 +104,14 @@ class Block {
         }
 
         Object.assign(this.props, nextProps);
+    };
+
+    setState = (nextState: any) => {
+        if (!nextState) {
+            return;
+        }
+
+        Object.assign(this.state, nextState);
     };
 
     get element() {
@@ -101,6 +127,7 @@ class Block {
 
         if (this._element) {
             this._removeEvents();
+            this._clearElement();
             this._element.replaceWith(newElement);
         }
 
@@ -112,8 +139,17 @@ class Block {
         return  '';
     }
 
-    getContent() : HTMLElement | null {
-        return this.element;
+    getContent(): HTMLElement {
+        // Хак, чтобы вызвать CDM только после добавления в DOM
+        if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+            setTimeout(() => {
+                if (this.element?.parentNode?.nodeType !==  Node.DOCUMENT_FRAGMENT_NODE ) {
+                    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+                }
+            }, 100)
+        }
+
+        return this.element!;
     }
 
     protected getChildren(propsAndChildren: any) {
@@ -206,19 +242,22 @@ class Block {
             stub.replaceWith(child.getContent()!);
         })
 
-
         return fragment.content;
     }
 
-    toggleClass(className: string, add: boolean) {
+    private _clearElement() {
+        this._element!.innerHTML = ''
+    }
+
+    protected toggleClass(className: string, add: boolean) {
         this._element!.classList.toggle(className, add)
     }
 
-    show() {
+    protected show() {
         this._element!.classList.remove('hidden')
     }
 
-    hide() {
+    protected hide() {
         this._element!.classList.add('hidden')
     }
 

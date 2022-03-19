@@ -1,3 +1,4 @@
+// @ts-ignore
 import {ProfilePage} from "../../blocks/ProfilePage";
 import {renderDOM} from "../../utils/renderDOM";
 

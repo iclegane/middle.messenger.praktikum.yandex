@@ -25,7 +25,7 @@ export class Messages extends Block {
         return `
             <div class="messages">
                 {{#each items as |item|}}
-                    {{{MessagesItem name=item.name avatar=item.avatar message=item.message}}}
+                    {{{MessagesItem name=item.name avatar=item.avatar message=item.message chatID=item.chatID}}}
                 {{/each}}
             </div>
         `;
