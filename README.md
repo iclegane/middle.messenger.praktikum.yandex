@@ -25,6 +25,6 @@ https://peaceful-khorana-50d6b2.netlify.app/
 ---
 
 ## Pull request link
- https://github.com/iclegane/middle.messenger.praktikum.yandex/pull/7
+https://github.com/iclegane/middle.messenger.praktikum.yandex/pull/13
  
 ---
