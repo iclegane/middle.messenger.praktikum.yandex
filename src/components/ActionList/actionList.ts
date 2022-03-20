@@ -1,7 +1,6 @@
 import Block from "../../utils/Block";
-import Button from "../Button";
+
 import { IActionList } from "./types";
-import { registerComponent } from "../../utils/registerComponent";
 
 
 
@@ -35,8 +34,6 @@ export class ActionList extends Block {
     }
 
     protected render(): string {
-
-        registerComponent(Button)
 
         //language=hbs
         return `

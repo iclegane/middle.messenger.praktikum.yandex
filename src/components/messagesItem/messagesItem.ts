@@ -1,6 +1,6 @@
-import Block from "../../../../utils/Block";
+import Block from "../../utils/Block";
 import { IMessagesItem } from "./types";
-import store from "../../../../modules/Store/Store";
+import store from "../../modules/Store/Store";
 
 
 export class MessagesItem extends Block {
@@ -28,7 +28,6 @@ export class MessagesItem extends Block {
                 }
             }
         })
-
     }
 
 
@@ -43,12 +42,20 @@ export class MessagesItem extends Block {
                 </div>
                 <div class="messages__info-wrapper">
                     <div class="messages__user-info">
-                        <div class="messages__user-name">{{name}}</div>
-                        <div class="messages__time">{{message.delivery_time}}</div>
+ 
+                        {{#if message.preview_text}}
+                            <div class="messages__user-name">{{message.preview_text.user.login}}</div>
+                            <div class="messages__time">{{message.delivery_time}}</div>
+                        {{else}}
+                            <div class="messages__user-name">{{name}}</div>
+                            <div class="messages__time">{{message.delivery_time}}</div>
+                        {{/if}}
                     </div>
                     <div class="messages__message-info">
                         <div class="messages__user-message">
-                            {{message.preview_text}}
+                            {{#if message.preview_text}}
+                                {{message.preview_text.content}}
+                            {{/if}}
                         </div>
                         
                         {{#if message.notification.count}}

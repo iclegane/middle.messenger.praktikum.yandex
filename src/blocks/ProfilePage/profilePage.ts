@@ -1,11 +1,8 @@
 import Block from "../../utils/Block";
-import Form from "../../components/Form";
-import Link from "../../components/Link";
-import Button from "../../components/Button";
 
 //@ts-ignore
 import { IProfileProps } from "./types";
-import { registerComponent } from "../../utils/registerComponent";
+
 import {User} from "../../modules/Store/types";
 import UserController from "../../controllers/UserController";
 import AuthController from "../../controllers/AuthController";
@@ -13,8 +10,6 @@ import {Router} from "../../modules/Router/Router";
 import {REGEXP} from "../../utils/REGEXP";
 
 import {UserUpdateData} from "../../api/UserAPI";
-
-
 
 export interface ChangePasswordForm {
     oldPassword: string;
@@ -24,12 +19,12 @@ export interface ChangePasswordForm {
 
 
 export class ProfilePage extends Block {
-
     private user: User;
 
-    constructor(props: User) {
+    constructor(props: any) {
         super(props);
-        this.user = props
+
+        this.user = props.user;
 
         this.setProfileContent();
     }
@@ -43,7 +38,7 @@ export class ProfilePage extends Block {
     setProfileContent() {
 
         const content = {
-            title: this.user.display_name || this.user.first_name,
+            title: '',
             header: {
                 image: {
                     //@ts-ignore
@@ -280,10 +275,6 @@ export class ProfilePage extends Block {
     }
 
     render() {
-
-        registerComponent(Form);
-        registerComponent(Link);
-        registerComponent(Button);
 
         //language=hbs
         return `

@@ -1,15 +1,18 @@
 import {Router} from "./modules/Router/Router";
 
+import components from "./components/**/index.ts"
 import LoginPage from "./blocks/LoginPage";
 import RegistrationPage from "./blocks/RegistrationPage";
 import ProfilePage from "./blocks/ProfilePage";
 import ChatPage from "./blocks/ChatPage";
 
 import AuthController from "./controllers/AuthController";
-import {ClearPage} from "./blocks/ClearPage";
+import {registerComponent} from "./utils/registerComponent";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+    Object.values(components).forEach((component) => registerComponent(component.default))
 
     const router = new Router('#app');
 
@@ -18,16 +21,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         .use("/registration", RegistrationPage)
         .use("/settings", ProfilePage)
         .use("/messenger", ChatPage)
-        .use("/test", ClearPage)
 
-    try {
-        await AuthController.getUser();
+        try {
+            await AuthController.getUser();
 
-        router.go('/messenger');
-    } catch(e) {
+            router.go('/messenger');
+        } catch(e) {
 
-        router.go('/signIn');
-    }
+            router.go('/signIn');
+        }
 
     router.start();
 })

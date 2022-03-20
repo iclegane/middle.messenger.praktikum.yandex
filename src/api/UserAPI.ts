@@ -1,5 +1,5 @@
 import BaseAPI from "./BaseAPI";
-
+import {User} from "../modules/Store/types";
 
 
 export interface UserUpdateData {
@@ -14,6 +14,10 @@ export interface UserUpdateData {
 export interface UserUpdatePassword {
     oldPassword: string;
     newPassword: string;
+}
+
+export interface searchUserProps {
+    login: string;
 }
 
 export default class UserAPI extends BaseAPI {
@@ -39,6 +43,12 @@ export default class UserAPI extends BaseAPI {
         return this.http.put('/profile/avatar', {
             data: data,
             formData: true,
+        })
+    }
+
+    search(data: searchUserProps): Promise<Array<User>> {
+        return this.http.post('/search', {
+            data: data,
         })
     }
 

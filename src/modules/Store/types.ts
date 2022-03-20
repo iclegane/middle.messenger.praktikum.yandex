@@ -29,8 +29,12 @@ export interface Chat {
 
 export interface StoreData {
     user?: User;
+    token?: {
+        value: string;
+    };
     currentChat?: {
         id: number | null;
+        messages: [],
     }
     chats?: {
         items: Array<Chat>,

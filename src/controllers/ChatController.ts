@@ -1,11 +1,14 @@
 import ChatAPI, {addUserToChatData, createChatData, deleteUserFromChatData} from "../api/ChatAPI";
 import store from "../modules/Store/Store";
-import {IMessagesItem} from "../components/Messages/components/messagesItem";
+import {IMessagesItem} from "../components/messagesItem";
+import {ChatSocket} from "../modules/ChatSocked/ChatSocked";
 
 
 
 
 class ChatController {
+
+    socket: ChatSocket | undefined
 
     private api: ChatAPI;
 
@@ -47,7 +50,10 @@ class ChatController {
 
             await this.getChats();
 
-            alert('Чат создан')
+
+
+
+
         } catch (e) {
             throw new Error('createChatController' + e)
         }
@@ -55,7 +61,10 @@ class ChatController {
 
     async addUserToChat(data: addUserToChatData) {
         try {
+
             await this.api.addUserToChat(data);
+
+
             alert('Пользователь успешно добавлен')
         } catch (e) {
             throw new Error('addUserToChat' + e)
@@ -69,6 +78,45 @@ class ChatController {
         } catch (e) {
             throw new Error('deleteUserFromChat' + e)
         }
+    }
+
+    async getToken(id: number) {
+        const data = await this.api.getToken({
+            id: id
+        })
+
+        store.set('token', {
+            value: data.token
+        });
+    }
+
+    async online() {
+        this.socket = new ChatSocket();
+        await this.socket.init()
+        this.socket?.getOld()
+
+        this.socket?.addEvents(ChatSocket.EVENTS.message, this._onNewMessage)
+        this.socket?.addEvents(ChatSocket.EVENTS.getOld, this._onOldMessages)
+    }
+
+    _onNewMessage(message: any) {
+        const messages = store.getState().currentChat.messages;
+        //@ts-ignore
+        messages.push(message);
+
+        store.set('currentChat', {
+            messages: messages
+        })
+    }
+
+    _onOldMessages(oldMessage: any) {
+        store.set('currentChat', {
+            messages: oldMessage
+        })
+    }
+
+    _send(message: string) {
+        this.socket?.sendMessage(message)
     }
 
 }

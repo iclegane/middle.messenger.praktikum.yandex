@@ -1,6 +1,4 @@
 import Block from "../../utils/Block";
-import Form from "../Form";
-import {registerComponent} from "../../utils/registerComponent";
 
 export interface ModalProps {
     title: string;
@@ -52,8 +50,6 @@ export class Modal extends Block {
     }
 
     protected render(): string {
-
-        registerComponent(Form)
 
         //language=hbs
         return `

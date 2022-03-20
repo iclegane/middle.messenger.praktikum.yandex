@@ -1,8 +1,7 @@
 import Block from "../../utils/Block";
-import Form from "../../components/Form";
-import { registerComponent } from "../../utils/registerComponent";
+
 import { REGEXP } from "../../utils/REGEXP";
-import {SignUpDate} from "../../api/AuthAPI";
+import { SignUpDate } from "../../api/AuthAPI";
 import AuthController from "../../controllers/AuthController";
 
 export class LoginPage extends Block{
@@ -51,7 +50,6 @@ export class LoginPage extends Block{
 
 
     protected render(): string {
-        registerComponent(Form);
 
         //language=hbs
         return `

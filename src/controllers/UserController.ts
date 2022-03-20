@@ -3,6 +3,7 @@ import store from "../modules/Store/Store";
 import {ChangePasswordForm} from "../blocks/ProfilePage/profilePage";
 import authController from "./AuthController";
 import {Router} from "../modules/Router/Router";
+import {User} from "../modules/Store/types";
 
 
 class AuthController {
@@ -18,7 +19,7 @@ class AuthController {
         try {
             const user = await this.api.updateUser(data);
 
-            store.set('currentUser', user);
+            store.set('user', user);
 
             return user;
         } catch (e: any) {
@@ -56,13 +57,23 @@ class AuthController {
 
         try {
             const user = await this.api.updateUserAvatar(form)
-            store.set('currentUser', user);
+            store.set('user', user);
 
             return user;
         } catch(e: any) {
             alert(e.reason);
             throw new Error(e);
         }
+    }
+
+    async search(login: string): Promise<Array<User>>  {
+        const users = await this.api.search({
+            login: login,
+        })
+
+        return users.filter((el) => {
+            return el.login === login
+        })
     }
 }
 

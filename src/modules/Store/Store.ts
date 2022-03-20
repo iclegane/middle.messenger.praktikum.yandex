@@ -3,6 +3,7 @@ import set from  '../../utils/set'
 import {StoreData, StoreEvents} from "./types";
 import Block from "../../utils/Block";
 import {isEqual} from "../../utils/isEqual";
+import {deepCopy} from "../../utils/deepCopy";
 
 
 
@@ -32,10 +33,9 @@ export const withStore = (mapStateToProps: (state: StoreData) => Record<string, 
             state = mapStateToProps(store.getState());
             super({...props, ...state});
 
-
             store.on(StoreEvents.Updated, () => {
 
-                const newState = mapStateToProps(store.getState());
+                const newState = deepCopy(mapStateToProps(store.getState()));
 
                 if (!isEqual(state, newState)) {
                     this.setProps({

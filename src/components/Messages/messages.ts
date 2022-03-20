@@ -1,8 +1,6 @@
 import Block from "../../utils/Block";
-import MessagesItem from "./components/messagesItem";
-import { IMessages } from "./types";
-import { registerComponent } from "../../utils/registerComponent";
 
+import { IMessages } from "./types";
 
 
 export class Messages extends Block {
@@ -18,8 +16,6 @@ export class Messages extends Block {
     }
 
     protected render(): string {
-
-        registerComponent(MessagesItem)
 
         //language=hbs
         return `

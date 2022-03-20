@@ -1,15 +1,5 @@
 import Block from "../../utils/Block";
-import Link from "../../components/Link";
-import Input from "../../components/Input";
-import Messages from "../../components/Messages";
-import ActionList from "../../components/ActionList";
-import Button from "../../components/Button";
-import Dialog from "../../components/Dialog";
-import Modal from "../../components/Modal";
 
-// import { IChatPage } from "./types";
-
-import { registerComponent } from "../../utils/registerComponent";
 import {isEqual} from "../../utils/isEqual";
 
 import {createChatFrom} from "./types";
@@ -24,7 +14,6 @@ export class ChatPage extends Block {
     constructor(props: any) {
 
         super({...props});
-
 
         const userHeaderActionList = {
             label: 'Настройки чатов',
@@ -65,36 +54,50 @@ export class ChatPage extends Block {
                 },]
         }
 
+        const sendForm = {
+            inputs: [{
+                name: 'message',
+                type: 'text',
+                display_name: 'Введите сообщение',
+                value: '',
+                required: true,
+                classes: 'chat__input gray-theme-input',
+            }],
+            button: {
+                name: 'Отправить',
+                classes: 'button--blue',
+                type: 'submit',
+            },
+            onSubmit: this._sendMessage.bind(this),
+        }
+
         this.setProps({
             user: {},
+            token: {
+                value: null,
+            },
             chats: {
                 items: [],
             },
             currentChat: {
                 id: null,
+                messages: [],
             },
-            // display_name: '',
-            // avatar_src: '',
+            display_name: null,
+            avatar_src: null,
             header_actions: userHeaderActionList,
             footer_actions: userFooterActionList,
-            // modal: {},
+            sendForm: sendForm,
+            modal: {},
         })
     }
 
     async componentDidMount() {
         await AuthController.getUser();
         await ChatController.getChats();
-
-        // this.setProps({
-        //     user,
-        //     chats
-        // })
-
-        console.log(this.props)
     }
 
-
-    protected _chooseChatByID(id: number) {
+    async _chooseChatByID(id: number) {
         const chats = store.getState().chats;
 
         const currentChat = chats?.items.filter((element) => element.chatID === id)[0];
@@ -105,7 +108,21 @@ export class ChatPage extends Block {
                 display_name: currentChat.name,
                 avatar_src: currentChat.avatar.src,
             })
+
+            await ChatController.getToken(id);
+
+            await this._wsInit();
         }
+    }
+
+    async _wsInit() {
+        await ChatController.online()
+    }
+
+    async _sendMessage(data: Record<string, string>) {
+        const { message } = data;
+
+        await ChatController._send(message);
     }
 
     protected handlerUserActions(e: MouseEvent) {
@@ -184,30 +201,49 @@ export class ChatPage extends Block {
 
     }
 
-    async _addUserToChat() {
-        const data = store.getState();
+    async _addUserToChat(data: Record<string, string>) {
 
-        if (!(data.user?.id && data.currentChat?.id)) {
-            throw new Error('user id ')
+        const storeData = store.getState();
+
+        if (storeData.currentChat?.id) {
+
+            const searchUsers = await UserController.search(data.login);
+
+
+
+            if (searchUsers.length) {
+                const searchUser = searchUsers[0];
+
+
+                await ChatController.addUserToChat({
+                    users: [
+                        searchUser.id
+                    ],
+                    chatId: storeData.currentChat?.id,
+                })
+            }
         }
-
-        await ChatController.addUserToChat({
-            users: [data.user?.id],
-            chatId: data.currentChat?.id,
-        })
     }
 
-    async _deleteUserFromChat() {
-        const data = store.getState();
+    async _deleteUserFromChat(data: Record<string, string>) {
+        const storeData = store.getState();
 
-        if (!(data.user?.id && data.currentChat?.id)) {
-            throw new Error('user id ')
+        if (storeData.currentChat?.id) {
+
+            const searchUsers = await UserController.search(data.login);
+
+            if (searchUsers.length) {
+                const searchUser = searchUsers[0];
+
+
+                await ChatController.deleteUserFromChat({
+                    users: [
+                        searchUser.id
+                    ],
+                    chatId: storeData.currentChat?.id,
+                })
+            }
         }
-
-        await ChatController.deleteUserFromChat({
-            users: [data.user?.id],
-            chatId: data.currentChat?.id,
-        })
     }
 
     async _createChat(data: createChatFrom) {
@@ -215,10 +251,6 @@ export class ChatPage extends Block {
             title: data.chatTitle
         })
     }
-
-
-
-
 
     componentDidUpdate(oldProps: any, newProps: any): boolean {
 
@@ -231,16 +263,11 @@ export class ChatPage extends Block {
             }
         }
 
-        console.log(oldProps.chats)
-
-
-        // if (oldProps.currentChat !== newProps.currentChat) {
-        //     console.log('test')
-        //     if (Number.isInteger(newProps.currentChat.id)) {
-        //
-        //         this._chooseChatByID(newProps.currentChat.id);
-        //     }
-        // }
+        if (oldProps.currentChat && newProps.currentChat) {
+            if (!isEqual(newProps.currentChat, oldProps)) {
+                // console.log(oldProps.currentChat, newProps.currentChat)
+            }
+        }
 
         return !isEqual(newProps, oldProps)
     }
@@ -260,15 +287,7 @@ export class ChatPage extends Block {
         }
     }
 
-
     protected render(): string {
-        registerComponent(Messages);
-        registerComponent(ActionList);
-        registerComponent(Dialog);
-        registerComponent(Input);
-        registerComponent(Link);
-        registerComponent(Button);
-        registerComponent(Modal);
 
         //language=hbs
         return `
@@ -304,17 +323,20 @@ export class ChatPage extends Block {
                                 </div>
                             </div>
                             <div class="chat__body">
-                                {{{Dialog groups=dialog.groups}}}
+                                {{{Dialog groups=currentChat.messages}}}
                             </div>
                             <div class="chat__footer">
-
-                                <div class="attentions">
-                                    {{{ActionList label=footer_actions.label items=footer_actions.items position='top'}}}
-                                </div>
- 
-                                {{{Input type="text" required=true name="message" classes="chat__input gray-theme-input" display_name="Сообщение"}}}
-
-                                {{{Button type="button" classes="button--blue" name="Отправить"}}}
+                                
+                                <!--
+                                    <div class="attentions">
+                                        {{{ActionList label=footer_actions.label items=footer_actions.items position='top'}}}
+                                    </div>
+     
+                                    {{{Input type="text" required=true name="message" classes="chat__input gray-theme-input" display_name="Сообщение"}}}
+                                    {{{Button type="button" classes="button--blue" name="Отправить"}}}
+                                -->
+                                
+                                {{{Form button=sendForm.button inputs=sendForm.inputs onSubmit=sendForm.onSubmit}}}
                             </div>
                         </div>
                     </div>

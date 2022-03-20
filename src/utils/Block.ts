@@ -75,16 +75,6 @@ class Block {
     }
 
     private _componentDidUpdate(oldProps : any, newProps : any) {
-        // const response = this.componentDidUpdate(oldProps, newProps);
-        //
-        // if (response) {
-        //     this._removeEvents()
-        //     this._clearElement()
-        //     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-        // }
-        //
-        // return response;
-
 
         const response = this.componentDidUpdate(oldProps, newProps);
         if (!response) {
@@ -253,11 +243,11 @@ class Block {
         this._element!.classList.toggle(className, add)
     }
 
-    protected show() {
+    show() {
         this._element!.classList.remove('hidden')
     }
 
-    protected hide() {
+    hide() {
         this._element!.classList.add('hidden')
     }
 

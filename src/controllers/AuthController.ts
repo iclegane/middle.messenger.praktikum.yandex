@@ -12,6 +12,9 @@ class AuthController {
 
     async signUp(data: SignUpDate) {
         await this.api.signUp(data);
+
+        const router = new Router('#app');
+        router.go('/messenger');
     }
 
     async signIn(data: SignInDate) {
@@ -20,7 +23,7 @@ class AuthController {
         await this.getUser();
 
         const router = new Router('#app');
-        router.go('/settings');
+        router.go('/messenger');
     }
 
     async logOut() {

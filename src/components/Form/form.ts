@@ -1,11 +1,7 @@
 import Block from '../../utils/Block'
-import Input from "../Input";
-import Link from "../Link";
-import Button from "../Button";
+
 import { IFormProps } from "./types";
 import { getFormData } from "../../utils/getFormData";
-import { registerComponent } from "../../utils/registerComponent";
-
 
 export class Form extends Block {
 
@@ -39,10 +35,6 @@ export class Form extends Block {
     }
 
     render(){
-
-        registerComponent(Input);
-        registerComponent(Button);
-        registerComponent(Link);
 
         //language=hbs
         return `

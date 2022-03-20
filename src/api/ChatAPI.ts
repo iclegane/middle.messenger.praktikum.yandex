@@ -25,6 +25,13 @@ export type deleteUserFromChatData  = {
     chatId: number;
 }
 
+export type Token = {
+    token: string;
+}
+
+export type ChatID = {
+    id: number
+}
 
 export default class ChatAPI extends BaseAPI {
 
@@ -56,6 +63,13 @@ export default class ChatAPI extends BaseAPI {
         })
     }
 
+    getToken(data: ChatID): Promise<Token> {
+        const path  = '/token/' + data.id;
+
+        return this.http.post(path, {
+
+        })
+    }
 
     create = undefined;
     read = undefined;
