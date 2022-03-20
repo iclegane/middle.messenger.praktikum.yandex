@@ -1,6 +1,6 @@
 import {ILinkProps} from "../../components/Link";
 import {IInputProps} from "../../components/Input";
-import {IMessagesItem} from "../../components/Messages/components/messagesItem";
+import {IMessagesItem} from "../../components/messagesItem";
 import {IActionList} from "../../components/ActionList";
 import {IDialog} from "../../components/Dialog";
 
@@ -17,4 +17,9 @@ export type IChatPage = {
     footer_actions?: IActionList
     header_actions?: IActionList,
     dialog?: IDialog;
+}
+
+
+export type createChatFrom = {
+    chatTitle: string;
 }

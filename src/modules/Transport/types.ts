@@ -7,5 +7,6 @@ export enum METHODS_Transport {
 
 export interface ITransportMethodsOptions<T> {
     data?: T
-    headers?: Record<string, string> | never
+    headers?: Record<string, string> | never,
+    formData?: boolean,
 }
