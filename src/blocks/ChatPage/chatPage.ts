@@ -277,7 +277,7 @@ export class ChatPage extends Block {
         for (const key in this.children) {
 
             const child = this.children[key];
-            const childName = child.constructor.name;
+            const childName = child.constructor.componentName;
 
             if (childName === 'Modal') {
                 //@ts-ignore
