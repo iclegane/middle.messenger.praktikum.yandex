@@ -1,11 +1,7 @@
 import Block from '../../utils/Block'
-import Input from "../Input";
-import Link from "../Link";
-import Button from "../Button";
+
 import { IFormProps } from "./types";
 import { getFormData } from "../../utils/getFormData";
-import { registerComponent } from "../../utils/registerComponent";
-
 
 export class Form extends Block {
 
@@ -13,11 +9,12 @@ export class Form extends Block {
         return 'Form';
     }
 
-    constructor({inputs, button, link} : IFormProps) {
+    constructor({inputs, button, link, onSubmit} : IFormProps) {
         super({
             inputs,
             button,
             link,
+            onSubmit,
             events: {
                 submit: (e: Event) => {
                     e.preventDefault();
@@ -25,8 +22,12 @@ export class Form extends Block {
                     const form = e.target as HTMLFormElement;
                     const data = getFormData(form);
 
+
                     if (form.checkValidity()) {
-                        console.log(data)
+                        if (onSubmit) {
+                            //@ts-ignore
+                            onSubmit(data);
+                        }
                     }
                 }
             },
@@ -34,10 +35,6 @@ export class Form extends Block {
     }
 
     render(){
-
-        registerComponent(Input);
-        registerComponent(Button);
-        registerComponent(Link);
 
         //language=hbs
         return `
@@ -47,7 +44,7 @@ export class Form extends Block {
                     {{#each inputs as |input|}}
                         <div class="input-group">
                             <label class="input-group__label" for={{input.name}}>{{input.display_name}}</label>
-                            {{{ Input type=input.type name=input.name validity=input.validity value=input.value required=input.required  events=../events  }}}
+                            {{{ Input type=input.type name=input.name validity=input.validity value=input.value required=input.required accept=input.accept  events=../events  }}}
                         </div>
                     {{/each}}
 

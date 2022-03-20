@@ -1,5 +1,6 @@
 import { IFormProps } from "../../components/Form";
 import { ILinkProps } from "../../components/Link";
+import {IButtonProps} from "../../components/Button";
 
 export type IProfileProps = {
     title: string;
@@ -9,11 +10,15 @@ export type IProfileProps = {
         }
     },
     body?: {
-        userData?: Array<Record<string, string>>;
+        userData?: Array<Record<string, unknown>>;
         form?: IFormProps;
     },
     footer?:{
         links: Array<ILinkProps>;
+        buttons: Array<IButtonProps>;
     },
-    navigation?: ILinkProps;
+    navigation?: {
+        link: ILinkProps,
+        button: IButtonProps,
+    };
 }

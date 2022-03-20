@@ -10,7 +10,7 @@ export class Input extends Block {
 
     protected readonly errorClass : string = 'input-group__input--invalid';
 
-    constructor({type = 'text', value, name, validity, required, classes, display_name, events}: IInputProps) {
+    constructor({type = 'text', value, name, validity, required, classes, display_name, accept, events}: IInputProps) {
         super({
             type,
             value,
@@ -18,6 +18,7 @@ export class Input extends Block {
             validity,
             required,
             classes,
+            accept,
             display_name,
             events: {
                 ...events,
@@ -79,12 +80,17 @@ export class Input extends Block {
                 name="{{name}}"
                 placeholder="{{display_name}}"
                 autocomplete="off"
-                value="{{value}}"
+                {{#if value}}
+                    value="{{value}}"
+                {{/if}}
                 {{#if validity}}
                     pattern="{{validity.PATTERN}}"
                 {{/if}}
                 {{#if required}}
                     required
+                {{/if}}                
+                {{#if accept}}
+                    accept="{{accept}}"
                 {{/if}}
                 >
         `;

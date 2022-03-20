@@ -1,4 +1,4 @@
-import {IMessagesItem} from "./components/messagesItem";
+import {IMessagesItem} from "../messagesItem";
 
 
 export type IMessages = {

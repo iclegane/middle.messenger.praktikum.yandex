@@ -8,8 +8,19 @@ export class Link extends Block {
         return 'Link';
     }
 
-    constructor({label, href, classes} : ILinkProps) {
-        super({label, href, classes});
+    constructor({label, href, classes, router} : ILinkProps) {
+        super({
+            label,
+            href,
+            classes,
+            events: {
+                click: (event: MouseEvent) => {
+                    event.preventDefault();
+
+                    router.go(href);
+                }
+            }
+        });
     }
 
     render() {

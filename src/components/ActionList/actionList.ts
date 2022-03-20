@@ -1,7 +1,6 @@
 import Block from "../../utils/Block";
-import Button from "../Button";
+
 import { IActionList } from "./types";
-import { registerComponent } from "../../utils/registerComponent";
 
 
 
@@ -36,8 +35,6 @@ export class ActionList extends Block {
 
     protected render(): string {
 
-        registerComponent(Button)
-
         //language=hbs
         return `
             <div class="actions-list">
@@ -47,7 +44,7 @@ export class ActionList extends Block {
                 <div class="actions-list__hidden-panel actions-list__hidden-panel--{{position}}">
                     <div class="actions-list__items">
                         {{#each items as |item|}}
-                            {{{Button type="button" name=item.label classes="actions-list__button"}}}
+                            {{{Button type="button" name=item.label classes="actions-list__button" data=item.data onClick=item.onClick}}}
                         {{/each}}
                     </div>
                 </div>
