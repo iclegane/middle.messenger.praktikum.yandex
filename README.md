@@ -9,8 +9,9 @@ https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1
 ---
 
 ## Команды
-- `npm start` — запуск версии для разработчика,
-
+- `npm dev` — запуск версии для разработчика,
+- `npm start` — запуск,
+- `npm test` — запуск тестов,
 ---
 
 ## Прототип netlify
