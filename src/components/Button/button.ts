@@ -7,11 +7,12 @@ export class Button extends Block {
         return 'Button';
     }
 
-    constructor({name, onClick, type, classes}: IButtonProps) {
+    constructor({name, onClick, type, classes, data}: IButtonProps) {
         super({
             name,
             classes,
             type,
+            data,
             events: {
                 click: onClick
             }
@@ -21,7 +22,7 @@ export class Button extends Block {
     render() {
         //language=hbs
         return `
-            <button type="{{type}}" class="button {{classes}}">
+            <button type="{{type}}" class="button {{classes}}" data-type={{data.type}}>
                 {{ name }}
             </button>
         `;

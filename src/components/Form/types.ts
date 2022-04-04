@@ -7,4 +7,5 @@ export type IFormProps = {
     inputs: Array<IInputProps>;
     button: IButtonProps;
     link?: ILinkProps;
+    onSubmit?: () => void;
 }

@@ -1,4 +1,4 @@
-import {IDialogMessage} from "./components/DialogMessage/types";
+import {IDialogMessage} from "../DialogMessage/types";
 
 export type IDialog = {
     groups: [{

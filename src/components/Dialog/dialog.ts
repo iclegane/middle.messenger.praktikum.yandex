@@ -1,7 +1,5 @@
 import Block from "../../utils/Block";
 import { IDialog } from "./types";
-import { registerComponent } from "../../utils/registerComponent";
-import DialogMessage from "./components/DialogMessage";
 
 export class Dialog extends Block {
 
@@ -13,10 +11,27 @@ export class Dialog extends Block {
         super({
             groups
         });
+
+        if (groups) {
+            let items = groups.map((message) => {
+                return {
+                    message_type: 'text',
+                    attachments: {
+                        text: message.content
+                    }
+                }
+            });
+
+            this.setProps({
+                groups: [{
+                    data: '1',
+                    messages: items,
+                }]
+            })
+        }
     }
 
     protected render(): string {
-        registerComponent(DialogMessage)
 
         //language=hbs
         return `
