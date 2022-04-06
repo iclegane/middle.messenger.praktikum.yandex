@@ -1,0 +1,15 @@
+.link {
+  cursor: pointer;
+
+  &--blue {
+    color: $color--blue;
+  }
+
+  &--gray {
+    color: $color--gray;
+  }
+
+  &--red {
+    color: $color--red;
+  }
+}

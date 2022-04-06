@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "dom",
+      "es2019",
+      "dom.iterable"
+    ],
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@modules": ["./modules/*"],
+      "@components": ["./components/*"],
+      "@utils": ["./utils/*"],
+      "@static": ["./static/*"],
+    },
+    "types": [
+      "webpack",
+      "webpack-env"
+    ]
+  }
+}

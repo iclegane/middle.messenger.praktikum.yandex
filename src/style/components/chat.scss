@@ -1,0 +1,389 @@
+.messenger {
+  display: flex;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  &__left-panel {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    padding: 10px 0;
+    border-right: 1px solid #eaeaea;
+  }
+
+  &__right-panel {
+    flex: 1;
+  }
+}
+
+.messages {
+  position: relative;
+  background: #fbfbfb;
+  overflow: auto;
+
+  &__overlay {
+    position: relative;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px;
+    border-top: 1px solid #eaeaea;
+    cursor: pointer;
+
+    &--active {
+      background-color: #e4edfd;
+    }
+
+    &:hover {
+      background-color: #e4edfd;
+    }
+  }
+
+  &__avatar {
+    width: 47px;
+    height: 47px;
+  }
+
+  &__info-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 10px;
+  }
+
+  &__user-info {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  &__user-name {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 13px;
+    color: #1e1e1e;
+  }
+
+  &__user-message {
+    height: 30px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #999;
+
+    &--owner::before {
+      content: "Вы:";
+      font-weight: bold;
+      color: black;
+      padding-right: 3px;
+    }
+  }
+
+  &__message-info {
+    display: flex;
+    //flex-direction: column;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  &__time {
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 13px;
+    color: #999;
+  }
+
+  &__badge {
+    &--empty {
+      opacity: 0;
+    }
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+
+  &--round {
+    border-radius: 50%;
+  }
+
+  &--empty {
+    background-color: #efefef;
+  }
+}
+
+.badge {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3369f3;
+
+  &__count {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    line-height: 12px;
+    color: white;
+  }
+}
+
+.search-panel {
+  position: relative;
+  margin: 15px 0;
+  padding: 0 10px;
+
+  &__input {
+    width: 100%;
+    background: #efefef;
+    border-radius: 5px;
+    padding: 10px;
+    border: 0;
+  }
+}
+
+.navigation-panel {
+  position: relative;
+  margin: 10px 0;
+  padding: 0 10px;
+  text-align: right;
+
+  &__link {
+    font-size: 12px;
+  }
+}
+
+.chat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 10px;
+  height: 100%;
+
+  &__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eaeaea;
+    padding: 10px 0;
+  }
+
+  &__body {
+    position: relative;
+    display: flex;
+    flex: 1;
+  }
+
+  &__footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #eaeaea;
+    padding: 10px 0;
+
+    form {
+      display: flex;
+    }
+  }
+
+  &__input {
+    margin: 0 10px;
+  }
+
+  &__user-avatar {
+    position: relative;
+    width: 34px;
+    height: 34px;
+  }
+
+  &__user-info {
+    display: flex;
+    align-items: center;
+  }
+
+  &__user-name {
+    margin-left: 10px;
+  }
+
+  &__user-actions {
+    position: relative;
+  }
+
+  &__note {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    span {
+      font-weight: 500;
+      font-size: 14px;
+      color: #999;
+    }
+  }
+}
+
+.dialog {
+  position: relative;
+  overflow: auto;
+  flex: 1;
+
+  &__overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+
+  &__time {}
+}
+
+.message {
+  position: relative;
+  display: flex;
+  flex: 1;
+
+  +.message {
+    margin-top: 10px;
+  }
+
+  &__time {
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  &__content {
+    position: relative;
+    max-width: 400px;
+    padding: 10px;
+
+    &--text {
+      background: #f8f8f8;
+    }
+
+    &--media {
+      padding: 30px;
+      border: 1px solid #eaeaea;
+      border-radius: 12px;
+
+      img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+      }
+
+      .message-meta {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        background: rgb(82 82 82 / 50%);
+        border-radius: 30px;
+        padding: 2px 7px;
+        display: inline-flex;
+
+        &__time {
+          color: white;
+        }
+      }
+    }
+  }
+
+  &--received {
+    justify-content: start;
+
+    .message__content--text {
+      background: #f8f8f8;
+      border-radius: 0 10px 10px;
+    }
+  }
+
+  &--send {
+    justify-content: end;
+
+    .message__content--text {
+      background: #e4edfd;
+      border-radius: 10px 10px 0;
+    }
+
+    .message-meta {
+      top: 5px;
+
+      &__time {
+        color: #3369f3;
+      }
+    }
+  }
+}
+
+.message-meta {
+  position: relative;
+  float: right;
+  margin-left: 15px;
+
+  &__time {
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 13px;
+    color: #999;
+  }
+
+  &__status {
+    position: relative;
+    display: inline-block;
+    width: 15px;
+    height: 10px;
+
+    &--read {
+      background-size: contain;
+      background: url("/static/icons/svg/message--read.svg") no-repeat bottom center;
+    }
+  }
+}
+
+.actions-list {
+  position: relative;
+
+  &__hidden-panel {
+    position: absolute;
+    margin-top: 20px;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 6px rgb(0 0 0 / 14%);
+    border-radius: 12px;
+    opacity: 0;
+    display: none;
+    z-index: 200;
+
+    &--top {
+      transform: translate(0, -215px);
+    }
+
+    &--open {
+      opacity: 1;
+      display: block;
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 10px;
+  }
+
+  &__button {
+    width: auto;
+    background: none;
+  }
+}
