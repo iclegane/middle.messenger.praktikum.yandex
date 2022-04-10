@@ -1,5 +1,5 @@
 ## Описание
-Web messanger
+Web messenger
 
 ---
 
@@ -9,19 +9,28 @@ https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1
 ---
 
 ## Команды
-- `npm dev` — запуск версии для разработчика,
-- `npm start` — запуск,
-- `npm test` — запуск тестов,
+- `npm dev` — запуск версии для разработчика
+- `npm build` — сборка проекта
+- `npm start` — сборка и запуск сервера
+- `npm test` — запуск mocha тестов
+- `npm eslint` — запуск eslint
+- `npm eslintfix` — запуск eslint with --fix
+- `npm stylelint` — запуск stylelint
+- `npm stylelintfix` — запуск stylelint with --fix
+
 ---
 
-## Прототип netlify
-https://peaceful-khorana-50d6b2.netlify.app/
+## Heroku deploy
+https://infinite-beyond-96053.herokuapp.com
  
 ---
- 
-## Изменения
--Добавлен компонентный подход..
- 
+
+## Функционал
+- Авторизация
+- Регистрация
+- Профиль (Аватар, Данные профиля, Пароль)
+- Чат (Создать чат, добавить пользователя в чат, удалить пользователя из чата)
+
 ---
 
 ## Pull request link
