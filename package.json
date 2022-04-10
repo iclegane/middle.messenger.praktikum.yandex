@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "webpack serve --open --config webpack.config.js",
     "build": "node ./node_modules/.bin/webpack",
+    "start" : "npm run build && node ./server.js",
     "eslint": "eslint src --ext .js,.ts",
     "eslintfix": "eslint src --ext .js,.ts --fix",
     "stylelint": "stylelint '**/*.scss'",
     "stylelintfix": "stylelint '**/*.scss' --fix",
-    "test": "mocha --webpack-config webpack.test.js -r ts-node/register -r jsdom-global/register src/**/*.spec.ts"
+    "test": "mocha --webpack-config webpack.config.js -r ts-node/register -r jsdom-global/register src/**/*.spec.ts"
   },
   "devDependencies": {
     "@babel/preset-env": "7.16.11",
@@ -47,7 +48,7 @@
     "webpack-cli": "4.9.2",
     "webpack-dev-server": "4.7.4",
     "webpack-merge": "5.8.0",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "3.0.0"
   },
   "dependencies": {
     "express": "4.17.3",

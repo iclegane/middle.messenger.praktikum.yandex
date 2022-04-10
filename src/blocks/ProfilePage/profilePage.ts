@@ -30,6 +30,8 @@ export class ProfilePage extends Block {
   getUserDataByProps(data: User) {
     const { id, avatar, ...userData } = data;
 
+    console.log(id, avatar)
+
     return userData;
   }
 
