@@ -34,6 +34,6 @@ https://infinite-beyond-96053.herokuapp.com
 ---
 
 ## Pull request link
-https://github.com/iclegane/middle.messenger.praktikum.yandex/pull/13
+https://github.com/iclegane/middle.messenger.praktikum.yandex/pull/15
  
 ---
