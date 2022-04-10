@@ -1,67 +1,58 @@
-import Block from "../../utils/Block";
-import { IMessagesItem } from "./types";
-import store from "../../modules/Store/Store";
-
+import { Block } from '../../modules/Block';
+import { IMessagesItem } from './types';
+import store from '../../modules/Store/Store';
+import { dateFormattedTime } from '../../utils/dateFormatted';
 
 export class MessagesItem extends Block {
+  static get componentName() : string {
+    return 'MessagesItem';
+  }
 
-    static get componentName() : string {
-        return 'MessagesItem';
-    }
+  constructor(props: IMessagesItem) {
+    super();
 
-    constructor({chatID, name, avatar, message} : IMessagesItem) {
-        super();
+    this.setProps({
+      chatID: props.chatID,
+      title: props.title,
+      unread_count: props.unread_count,
+      last_message: {
+        time: props.last_message?.time ? dateFormattedTime(props.last_message.time) : '',
+        content: props.last_message?.content,
+      },
+      is_active: false,
+      events: {
+        click: (e: MouseEvent) => {
+          e.preventDefault();
 
-        this.setProps({
-            chatID,
-            name,
-            avatar,
-            message,
-            events: {
-                click: (e: MouseEvent) => {
-                    e.preventDefault();
+          store.set('currentChat', {
+            id: props.chatID,
+          });
+        },
+      },
+    });
+  }
 
-                    store.set("currentChat", {
-                        id: chatID
-                    })
-
-                }
-            }
-        })
-    }
-
-
-
-    protected render(): string {
-
-        //language=hbs
-        return `
+  protected render(): string {
+    // language=hbs
+    return `
             <div class="messages__item">
                 <div class="messages__avatar">
                     <div class="image image--round image--empty"></div>
                 </div>
                 <div class="messages__info-wrapper">
                     <div class="messages__user-info">
- 
-                        {{#if message.preview_text}}
-                            <div class="messages__user-name">{{message.preview_text.user.login}}</div>
-                            <div class="messages__time">{{message.delivery_time}}</div>
-                        {{else}}
-                            <div class="messages__user-name">{{name}}</div>
-                            <div class="messages__time">{{message.delivery_time}}</div>
-                        {{/if}}
+                        <div class="messages__user-name">{{title}}</div>
+                        <div class="messages__time">{{last_message.time}}</div>
                     </div>
                     <div class="messages__message-info">
                         <div class="messages__user-message">
-                            {{#if message.preview_text}}
-                                {{message.preview_text.content}}
-                            {{/if}}
+                            {{last_message.content}}
                         </div>
                         
-                        {{#if message.notification.count}}
+                        {{#if unread_count}}
                             <div class="messages__badge">
                                 <div class="badge">
-                                    <div class="badge__count">{{message.notification.count}}</div>
+                                    <div class="badge__count">{{unread_count}}</div>
                                 </div>
                             </div>
                         {{else}}
@@ -75,5 +66,5 @@ export class MessagesItem extends Block {
                 </div>
             </div>
         `;
-    }
+  }
 }

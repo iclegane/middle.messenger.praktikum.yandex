@@ -1,80 +1,78 @@
-import UserAPI, {UserUpdateData} from "../api/UserAPI";
-import store from "../modules/Store/Store";
-import {ChangePasswordForm} from "../blocks/ProfilePage/profilePage";
-import authController from "./AuthController";
-import {Router} from "../modules/Router/Router";
-import {User} from "../modules/Store/types";
-
+import UserAPI, { UserUpdateData } from '../api/UserAPI';
+import store from '../modules/Store/Store';
+import { ChangePasswordForm } from '../blocks/ProfilePage/profilePage';
+import authController from './AuthController';
+import Router from '../modules/Router/Router';
+import { User } from '../modules/Store/types';
 
 class AuthController {
+  private api: UserAPI;
 
-    private api: UserAPI;
+  constructor() {
+    this.api = new UserAPI();
+  }
 
-    constructor() {
-        this.api = new UserAPI();
+  async updateUser(data: UserUpdateData) {
+    try {
+      const user = await this.api.updateUser(data);
+
+      store.set('user', user);
+    } catch (e: any) {
+      throw new Error(e);
+    }
+  }
+
+  async updatePassword(data: ChangePasswordForm) {
+    if (data.newPassword !== data.repeatNewPassword) {
+      alert('New password must be same a repeat password');
+
+      throw new Error('New password must be same a repeat password');
     }
 
+    try {
+      await this.api.updateUserPassword({
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword,
+      });
 
-    async updateUser(data: UserUpdateData) {
-        try {
-            const user = await this.api.updateUser(data);
+      await authController.logOut();
 
-            store.set('user', user);
+      alert('Авторизуйтесь с новым паролем');
 
-            return user;
-        } catch (e: any) {
-            throw new Error(e);
-        }
+      const router = new Router('#app');
+      router.go('/signIn');
+    } catch (e: any) {
+      alert('updatePassword error');
+
+      throw new Error('updatePassword error');
     }
+  }
 
-    async updatePassword(data: ChangePasswordForm) {
-        if (data.newPassword !== data.repeatNewPassword) {
-            alert('New password must be same a repeat password');
-            throw new Error('New password must be same a repeat password')
-        }
+  async updateAvatar(data: File) {
+    const form = new FormData();
+    form.append('avatar', data);
 
-        await this.api.updateUserPassword({
-            oldPassword: data.oldPassword,
-            newPassword: data.newPassword
-        });
+    try {
+      const user = await this.api.updateUserAvatar(form);
 
-        try {
-            await authController.logOut();
-
-            alert('Авторизуйтесь с новым паролем')
-
-            const router = new Router('#app');
-            router.go('/signIn');
-        } catch(e) {
-            alert(e)
-        }
+      store.set('user', user);
+    } catch (e: any) {
+      console.log('tut');
+      throw new Error(e);
     }
+  }
 
-    async updateAvatar(data: File) {
+  async search(login: string): Promise<Array<User>> {
+    try {
+      const users = await this.api.search({
+        login,
+      });
 
-        const form = new FormData();
-        form.append('avatar', data)
-
-        try {
-            const user = await this.api.updateUserAvatar(form)
-            store.set('user', user);
-
-            return user;
-        } catch(e: any) {
-            alert(e.reason);
-            throw new Error(e);
-        }
+      return users.filter((el) => el.login === login);
+    } catch (e: any) {
+      throw new Error(e);
     }
-
-    async search(login: string): Promise<Array<User>>  {
-        const users = await this.api.search({
-            login: login,
-        })
-
-        return users.filter((el) => {
-            return el.login === login
-        })
-    }
+  }
 }
 
 export default new AuthController();

@@ -1,14 +1,12 @@
-export type IMessagesItem = {
+export interface IMessagesItem {
     chatID: number;
-    name: string;
+    title: string;
     avatar: {
         src: string | null;
     },
-    message: {
-        delivery_time?: string;
-        preview_text: string | null;
-        notification: {
-            count: number;
-        }
-    }
+    unread_count: number;
+    last_message: {
+        time: string;
+        content: string;
+    } | null,
 }

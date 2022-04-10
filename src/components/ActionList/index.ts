@@ -1,2 +1,2 @@
-export {ActionList as default} from './actionList'
-export * from './types'
+export { ActionList as default } from './actionList';
+export * from './types';

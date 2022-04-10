@@ -1,53 +1,64 @@
-import Block from "../../utils/Block";
-import { IDialog } from "./types";
+import { Block } from '../../modules/Block';
+import { IDialog } from './types';
+import {
+  getFormattedDay, getFormattedMonth, getFormattedYear, getMonthByDate,
+} from '../../utils/dateFormatted';
 
 export class Dialog extends Block {
+  static get componentName() : string {
+    return 'Dialog';
+  }
 
-    static get componentName() : string {
-        return 'Dialog';
-    }
+  constructor(data : IDialog) {
+    super();
 
-    constructor({groups} : IDialog) {
-        super({
-            groups
-        });
+    const groups: Record<string, any> = {};
+    if (data.messages) {
+      data.messages.forEach((message) => {
+        const dateConstructor = new Date(message.date.default);
+        const year = getFormattedYear(dateConstructor);
+        const month = getFormattedMonth(dateConstructor);
+        const day = getFormattedDay(dateConstructor);
+        const time = '00:00:00';
 
-        if (groups) {
-            let items = groups.map((message) => {
-                return {
-                    message_type: 'text',
-                    attachments: {
-                        text: message.content
-                    }
-                }
-            });
+        const pattern = `${year}-${month}-${day}T${time}`;
+        const dateKey = new Date(pattern).getTime();
 
-            this.setProps({
-                groups: [{
-                    data: '1',
-                    messages: items,
-                }]
-            })
+        if (groups.hasOwnProperty(dateKey)) {
+          groups[dateKey].messages.push(message);
+        } else {
+          groups[dateKey] = {
+            time: `${day} ${getMonthByDate(dateConstructor)}`,
+            messages: [message],
+          };
         }
+      });
+
+      this.setProps({
+        ...data,
+        groups,
+      });
     }
+  }
 
-    protected render(): string {
-
-        //language=hbs
-        return `
+  protected render(): string {
+    // language=hbs
+    return `
             <div class="dialog">
-                {{#each groups as |group|}}
-                    <div class="dialog__group">
-                        <div class="messages__time message__time">
-                            {{group.date}}
+                <div class="dialog__overlay">
+                    {{#each groups as |group|}}
+                        <div class="dialog__group">
+                            <div class="messages__time message__time">
+                                {{group.time}}
+                            </div>
+                            
+                            {{#each group.messages as |message|}}
+                                {{{DialogMessage content=message.content time=message.date.time is_owner=message.is_owner is_read=message.is_read}}}
+                            {{/each}}
                         </div>
-                        
-                        {{#each group.messages as |message|}}
-                            {{{DialogMessage meta=message.meta message_type=message.message_type delivery_time=message.delivery_time status=message.status isOwner=message.isOwner attachments=message.attachments}}}
-                        {{/each}}
-                    </div>
-                {{/each}}
+                    {{/each}}
+                </div>
             </div>
         `;
-    }
+  }
 }

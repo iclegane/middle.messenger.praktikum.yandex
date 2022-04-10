@@ -1,22 +1,22 @@
 form {
-    background-color: $color--white;
-    height: 100%;
+  background-color: $color--white;
+  height: 100%;
 }
 
 .form__wrapper {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .form__controls {
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    button,
-    a {
-        margin-bottom: 15px;
-    }
+  button,
+  a {
+    margin-bottom: 15px;
+  }
 }

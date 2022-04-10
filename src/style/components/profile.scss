@@ -1,42 +1,44 @@
 .profile {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.profile-information, .profile-settings {
+.profile-information,
+.profile-settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  &__container {
+    width: 550px;
+  }
+
+  &__content,
+  &__footer {
+    margin-top: 60px;
+  }
+
+  &__avatar-container {
+    position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex: 1;
-
-    &__container {
-        width: 550px;
-    }
-
-    &__content, &__footer {
-        margin-top: 60px;
-    }
-    
-    &__avatar-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 130px;
-        height: 130px;
-        margin: 0 auto;
-        border-radius: 50%;
-        background: $color--gray;
-    }
+    justify-content: center;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: $color--gray;
+  }
 }
 
 .profile-panel {
-    position: absolute;
-    left: 0;
-    width: 65px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-right: 1px solid $color--light;
+  position: absolute;
+  left: 0;
+  width: 65px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid $color--light;
 }

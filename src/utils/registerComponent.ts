@@ -1,20 +1,18 @@
-import Block from './Block';
-import { HelperOptions } from 'handlebars';
-import Handlebars from 'handlebars';
+import Handlebars, { HelperOptions } from 'handlebars';
+import { Block } from '../modules/Block';
 
 export function registerComponent(Component: typeof Block) {
-    Handlebars.registerHelper(Component.componentName, function ({ hash, data }: HelperOptions) {
+  Handlebars.registerHelper(Component.componentName, ({ hash, data }: HelperOptions) => {
+    if (!data.root.children) {
+      data.root.children = {};
+    }
 
-        if (!data.root.children) {
-            data.root.children = {};
-        }
+    const { children } = data.root;
 
-        const { children } = data.root;
+    const component = new Component(hash);
 
-        const component = new Component(hash);
+    children[component.id] = component;
 
-        children[component.id] = component;
-
-        return `<div data-id="id-${component.id}"></div>`;
-    })
+    return `<div data-id="id-${component.id}"></div>`;
+  });
 }

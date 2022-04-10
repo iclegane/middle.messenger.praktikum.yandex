@@ -1,15 +1,11 @@
 export type IDialogMessage = {
-    message_type: 'photo' | 'file' | 'location' | 'text';
-    delivery_time:string;
-    status: 'send' | 'received';
-    meta?: 'read';
-    isOwner: boolean;
-    attachments?: {
-        text?: string;
-        photo?: {
-            src:string;
-            width:number;
-            height:number;
-        }
-    }
+    message_id: number;
+    content: string;
+    is_read: boolean | undefined;
+    type: string;
+    date: {
+        default: string;
+        time: string;
+    },
+    is_owner: boolean;
 }

@@ -1,5 +1,5 @@
-import BaseAPI from "./BaseAPI";
-import {User} from "../modules/Store/types";
+import BaseAPI from './BaseAPI';
+import { User } from '../modules/Store/types';
 
 export interface SignUpDate {
     first_name: string;
@@ -9,40 +9,52 @@ export interface SignUpDate {
     password: string;
     phone: string;
 }
-
 export interface SignInDate {
-    "login": string;
-    "password": string;
+    'login': string;
+    'password': string;
+}
+
+export type ResponseSignInSuccess = {
+    login: string;
+    password: string;
+}
+export type ResponseSignInError = {
+    reason: string;
+}
+
+export type ResponseSignUpSuccess = {
+    id: number;
+}
+export type ResponseSignUpError= {
+    reason: string;
+}
+
+export type ResponseGetUserError= {
+    reason: string;
 }
 
 export default class AuthAPI extends BaseAPI {
+  constructor() {
+    super('/auth');
+  }
 
-    constructor() {
-        super('/auth');
-    }
+  signUp(data: SignUpDate): Promise<ResponseSignUpSuccess | ResponseSignUpError> {
+    return this.http.post('/signup', {
+      data,
+    });
+  }
 
-    signUp(data: SignUpDate): Promise<unknown> {
-        return this.http.post('/signup', {
-            data: data,
-        })
-    }
+  signIn(data: SignInDate): Promise<ResponseSignInSuccess | ResponseSignInError> {
+    return this.http.post('/signIn', {
+      data,
+    });
+  }
 
-    signIn(data: SignInDate): Promise<unknown> {
-        return this.http.post('/signIn', {
-            data: data
-        })
-    }
+  logOut(): Promise<string | Error> {
+    return this.http.post('/logout');
+  }
 
-    logOut(): Promise<unknown> {
-        return this.http.post('/logout')
-    }
-
-    getUser(): Promise<User>{
-        return this.http.get('/user')
-    }
-
-    create = undefined;
-    read = undefined;
-    update = undefined;
-    delete = undefined;
+  getUser(): Promise<User | ResponseGetUserError> {
+    return this.http.get('/user');
+  }
 }

@@ -1,4 +1,4 @@
-import Block from "../../utils/Block";
+import { Block } from '../../modules/Block';
 
 export interface ModalProps {
     title: string;
@@ -7,52 +7,50 @@ export interface ModalProps {
 }
 
 export class Modal extends Block {
+  static get componentName() : string {
+    return 'Modal';
+  }
 
-    static get componentName() : string {
-        return 'Modal';
-    }
+  get element() {
+    return this._element;
+  }
 
-    get element() {
-        return this._element;
-    }
+  status: boolean;
 
-    status: boolean
+  protected visibleClass: string = 'modal--visible';
 
-    protected visibleClass: string = 'modal--visible';
-    protected onCloseClass: string = 'modal__close';
+  protected onCloseClass: string = 'modal__close';
 
-    constructor({title, content, onSubmit}: ModalProps) {
-        super();
+  constructor({ title, content, onSubmit }: ModalProps) {
+    super();
 
-        this.setProps({
-            title,
-            content,
-            onSubmit,
-            events: {
-                click: (e: MouseEvent) => {
-                    const target = e.target as HTMLHtmlElement;
+    this.setProps({
+      title,
+      content,
+      onSubmit,
+      events: {
+        click: (e: MouseEvent) => {
+          const target = e.target as HTMLHtmlElement;
 
-                    if (target.closest('.' + this.onCloseClass)) {
-                        this.toggle();
-                    }
-                }
-            }
-        })
+          if (target.closest(`.${this.onCloseClass}`)) {
+            this.toggle();
+          }
+        },
+      },
+    });
 
-        this.status = false;
-    }
+    this.status = false;
+  }
 
-    toggle = () => {
+  toggle = () => {
+    this.status = !this.status;
 
-        this.status = !this.status;
+    this.toggleClass(this.visibleClass, this.status);
+  };
 
-        this.toggleClass(this.visibleClass, this.status)
-    }
-
-    protected render(): string {
-
-        //language=hbs
-        return `
+  protected render(): string {
+    // language=hbs
+    return `
             <div class="modal modal--center">
                 <div class="modal__close">
                     <span>закрыть</span>
@@ -64,6 +62,6 @@ export class Modal extends Block {
                     {{{Form inputs=content.inputs button=content.button onSubmit=content.onSubmit}}}
                 </div>
             </div>
-        `
-    }
+        `;
+  }
 }

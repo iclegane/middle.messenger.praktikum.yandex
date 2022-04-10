@@ -1,0 +1,10 @@
+.error-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__message {
+    color: red;
+    font-size: small;
+  }
+}

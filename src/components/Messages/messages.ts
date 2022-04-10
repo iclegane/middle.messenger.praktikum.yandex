@@ -1,29 +1,27 @@
-import Block from "../../utils/Block";
-
-import { IMessages } from "./types";
-
+import { Block } from '../../modules/Block';
+import { IMessages } from './types';
 
 export class Messages extends Block {
+  static get componentName() : string {
+    return 'Messages';
+  }
 
-    static get componentName() : string {
-        return 'Messages';
-    }
+  constructor({ items } : IMessages) {
+    super({
+      items,
+    });
+  }
 
-    constructor({items} : IMessages) {
-        super({
-            items
-        });
-    }
-
-    protected render(): string {
-
-        //language=hbs
-        return `
+  protected render(): string {
+    // language=hbs
+    return `
             <div class="messages">
-                {{#each items as |item|}}
-                    {{{MessagesItem name=item.name avatar=item.avatar message=item.message chatID=item.chatID}}}
-                {{/each}}
+                <div class="messages__overlay"> 
+                    {{#each items as |item|}}
+                        {{{MessagesItem chatID=item.chatID title=item.title unread_count=item.unread_count last_message=item.last_message}}}
+                    {{/each}}
+                </div>
             </div>
         `;
-    }
+  }
 }

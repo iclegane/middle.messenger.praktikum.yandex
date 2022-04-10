@@ -1,3 +1,6 @@
+import { IMessagesItem } from '../../components/messagesItem';
+import { IDialogMessage } from '../../components/DialogMessage';
+
 export enum StoreEvents {
     Updated = 'updated'
 }
@@ -13,20 +16,6 @@ export interface User {
     avatar: string;
 }
 
-export interface Chat {
-    id: number;
-    chatID: number;
-    title: string;
-    name: string;
-    avatar: {
-        src: string;
-    },
-    created_by: number;
-    unread_count: number;
-    last_message: string | null;
-}
-
-
 export interface StoreData {
     user?: User;
     token?: {
@@ -34,10 +23,12 @@ export interface StoreData {
     };
     currentChat?: {
         id: number | null;
-        messages: [],
+        messages: [IDialogMessage],
     }
     chats?: {
-        items: Array<Chat>,
+        items: Array<IMessagesItem>,
     };
-
+    error?: {
+        message: string,
+    },
 }

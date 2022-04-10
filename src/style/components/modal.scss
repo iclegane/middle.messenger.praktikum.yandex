@@ -1,32 +1,30 @@
 .modal {
   position: absolute;
+  display: none;
   width: 340px;
-
   padding: 30px;
-
   opacity: 0;
   z-index: 900;
-
-  background: #FFFFFF;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+  background: #fff;
+  box-shadow: 0 0 6px rgb(0 0 0 / 14%);
   border-radius: 12px;
 
   &--center {
     transform: translate(-50%, -50%);
-
     left: 50%;
     top: 50%;
   }
 
   &--visible {
+    display: block;
     opacity: 1;
   }
 
   &__title {
-    color: #1E1E1E;
+    color: #1e1e1e;
   }
 
-  &__header{
+  &__header {
     padding-bottom: 30px;
   }
 
@@ -34,13 +32,10 @@
 
   &__close {
     position: absolute;
-
     right: 10px;
     top: 10px;
-
     color: #9d9d9d;
     font-size: 10px;
-
     cursor: pointer;
   }
 }
