@@ -85,6 +85,8 @@ export class Block {
     return !isEqual(newProps, oldProps);
   }
 
+  getProps = () => this.props;
+
   setProps = (nextProps: any) => {
     if (!nextProps) {
       return;
@@ -196,7 +198,7 @@ export class Block {
     }
 
     Object.entries(events).forEach(([event, listener]) => {
-            //@ts-ignore
+            // @ts-ignore
             this._element!.removeEventListener(event, listener);
     });
   }
@@ -209,7 +211,7 @@ export class Block {
     }
 
     Object.entries(events).forEach(([event, listener]) => {
-            //@ts-ignore
+            // @ts-ignore
             this._element!.addEventListener(event, listener);
     });
   }

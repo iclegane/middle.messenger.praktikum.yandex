@@ -90,6 +90,16 @@ export class ChatPage extends Block {
       avatar_src: null,
       header_actions: userHeaderActionList,
       footer_actions: userFooterActionList,
+      plug: {
+        text: 'Выберите чат чтобы отправить сообщение или',
+        button: {
+          label: 'создайте чат',
+          data: {
+            type: 'createChat',
+          },
+          onClick: this.handlerUserActions.bind(this),
+        },
+      },
       sendForm,
       modal: {},
     });
@@ -266,6 +276,12 @@ export class ChatPage extends Block {
     }
   }
 
+  test() {
+    return {
+      type: 'createChat',
+    };
+  }
+
   protected render(): string {
     // language=hbs
     return `
@@ -283,11 +299,10 @@ export class ChatPage extends Block {
                 </div>
                 <div class="messenger__right-panel">
                         <div class="chat">
-                            {{#if currentChat.id}} 
+                            {{#if currentChat.id}}
                                 <div class="chat__header">
                                 <div class="chat__user-info">
                                     <div class="chat__user-avatar">
-                                        
                                         {{#if avatar_src.src}}
                                             <div class="image image--round" style="background-url:({{avatar_src.src}})"></div>
                                         {{else}}
@@ -302,20 +317,19 @@ export class ChatPage extends Block {
                                 </div>
                             </div>
                                 <div class="chat__body">
-                                {{{Dialog messages=currentChat.messages}}}
-                            </div>
+                                    {{{Dialog messages=currentChat.messages}}}
+                                </div>
                                 <div class="chat__footer">
                                 <!--
                                     <div class="attentions">
                                         {{{ActionList label=footer_actions.label items=footer_actions.items position='top'}}}
                                     </div>
                                 -->
-                                {{{ChatForm button=sendForm.button inputs=sendForm.inputs onSubmit=sendForm.onSubmit}}}
-                            </div>
+                                    {{{ChatForm button=sendForm.button inputs=sendForm.inputs onSubmit=sendForm.onSubmit}}}
+                                </div>
                             {{else}}
                                 <div class="chat__note">
-                                    <span>Выберите чат чтобы отправить сообщение или создайте чат</span>
-                                    {{{ActionList label=header_actions.label items=header_actions.items position='bottom'}}}
+                                    <span>{{{plug.text}}} {{{Button classes="button--text button--bottomBorder" name=plug.button.label type="button" data=plug.button.data onClick=plug.button.onClick }}}</span>
                                 </div>
                             {{/if}}
                         </div>

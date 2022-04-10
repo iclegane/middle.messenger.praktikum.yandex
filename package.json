@@ -6,37 +6,56 @@
   "scripts": {
     "dev": "webpack serve --open --config webpack.config.js",
     "build": "node ./node_modules/.bin/webpack",
-    "tslint": "eslint src --ext .js,.ts",
-    "tslintfix": "eslint src --ext .js,.ts --fix",
+    "eslint": "eslint src --ext .js,.ts",
+    "eslintfix": "eslint src --ext .js,.ts --fix",
     "stylelint": "stylelint '**/*.scss'",
-    "stylelintfix": "stylelint '**/*.scss' --fix"
+    "stylelintfix": "stylelint '**/*.scss' --fix",
+    "test": "mocha --webpack-config webpack.test.js -r ts-node/register -r jsdom-global/register src/**/*.spec.ts"
   },
   "devDependencies": {
+    "@babel/preset-env": "7.16.11",
+    "@babel/preset-typescript": "7.16.7",
+    "@babel/register": "7.17.7",
+    "@types/chai": "4.3.0",
+    "@types/mocha": "9.1.0",
     "@types/webpack-env": "1.16.3",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
+    "@typescript-eslint/eslint-plugin": "5.18.0",
+    "@typescript-eslint/parser": "5.18.0",
+    "chai": "4.3.6",
     "circular-dependency-plugin": "5.2.2",
     "css-loader": "6.7.1",
-    "eslint": "^8.12.0",
-    "eslint-config-airbnb": "^19.0.4",
+    "eslint": "8.12.0",
+    "eslint-config-airbnb": "19.0.4",
     "handlebars": "4.7.7",
     "handlebars-loader": "1.7.1",
     "html-webpack-plugin": "5.5.0",
+    "husky": "7.0.4",
+    "jsdom": "19.0.0",
+    "jsdom-global": "3.0.2",
+    "mocha": "9.2.2",
+    "mochapack": "2.1.4",
     "nanoid": "3.3.1",
     "sass": "1.49.9",
     "sass-loader": "12.6.0",
     "style-loader": "3.3.1",
-    "stylelint": "^14.6.1",
-    "stylelint-config-standard": "^25.0.0",
-    "stylelint-scss": "^4.2.0",
+    "stylelint": "14.6.1",
+    "stylelint-config-standard": "25.0.0",
+    "stylelint-scss": "4.2.0",
     "ts-loader": "9.2.8",
+    "ts-node": "10.7.0",
     "webpack": "5.70.0",
     "webpack-cli": "4.9.2",
     "webpack-dev-server": "4.7.4",
-    "webpack-merge": "5.8.0"
+    "webpack-merge": "5.8.0",
+    "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
     "express": "4.17.3",
     "express-history-api-fallback": "2.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run eslint && npm run test"
+    }
   }
 }

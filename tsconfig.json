@@ -24,7 +24,9 @@
     },
     "types": [
       "webpack",
-      "webpack-env"
+      "webpack-env",
+      "mocha",
+      "chai",
     ]
   }
 }
