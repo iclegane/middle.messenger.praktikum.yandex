@@ -1,43 +1,41 @@
-import Block from '../../utils/Block'
-
-import { IFormProps } from "./types";
-import { getFormData } from "../../utils/getFormData";
+import { Block } from '../../modules/Block';
+import { IFormProps } from './types';
+import { getFormData } from '../../utils/getFormData';
 
 export class Form extends Block {
+  static get componentName() : string {
+    return 'Form';
+  }
 
-    static get componentName() : string {
-        return 'Form';
-    }
+  constructor({
+    inputs, button, link, onSubmit,
+  } : IFormProps) {
+    super({
+      inputs,
+      button,
+      link,
+      onSubmit,
+      events: {
+        submit: (e: Event) => {
+          e.preventDefault();
 
-    constructor({inputs, button, link, onSubmit} : IFormProps) {
-        super({
-            inputs,
-            button,
-            link,
-            onSubmit,
-            events: {
-                submit: (e: Event) => {
-                    e.preventDefault();
+          const form = e.target as HTMLFormElement;
+          const data = getFormData(form);
 
-                    const form = e.target as HTMLFormElement;
-                    const data = getFormData(form);
+          if (form.checkValidity()) {
+            if (onSubmit) {
+              // @ts-ignore
+              onSubmit(data);
+            }
+          }
+        },
+      },
+    });
+  }
 
-
-                    if (form.checkValidity()) {
-                        if (onSubmit) {
-                            //@ts-ignore
-                            onSubmit(data);
-                        }
-                    }
-                }
-            },
-        });
-    }
-
-    render(){
-
-        //language=hbs
-        return `
+  render() {
+    // language=hbs
+    return `
             <form id="{{_id}}" action="" class="form">
                 <div class="form__wrapper">
         
@@ -55,5 +53,5 @@ export class Form extends Block {
                 </div>
             </form>
         `;
-    }
+  }
 }

@@ -1,38 +1,34 @@
-import Block from "../../utils/Block";
-import { IDialogMessage } from "./types";
-
+import { Block } from '../../modules/Block';
+import { IDialogMessage } from './types';
 
 export class DialogMessage extends Block {
+  static get componentName() : string {
+    return 'DialogMessage';
+  }
 
-    static get componentName() : string {
-        return 'DialogMessage';
-    }
+  constructor(data: IDialogMessage) {
+    super(data);
 
-    constructor({message_type, meta,  delivery_time, status, isOwner, attachments}: IDialogMessage) {
-        super({
-            message_type,
-            delivery_time,
-            status,
-            isOwner,
-            attachments,
-            meta
-        });
-    }
+    this.setProps({
+      status: data.is_owner ? 'send' : 'received',
+      meta: data.is_read ? 'read' : 'unread',
+    });
+  }
 
-    protected render(): string {
-        //language=hbs
-        return `
+  protected render(): string {
+    // language=hbs
+    return `
             <div class="message message--{{status}}">
-                <div class="message__content message__content--{{message_type}}">
+                <div class="message__content message__content--text">
                     <p>
-                        {{{attachments.text}}}
+                        {{{content}}}
                         <span class="message-meta">
                             <span class="message-meta__status message-meta__status--{{meta}}"></span>
-                            <span class="message-meta__time">{{delivery_time}}</span>
+                            <span class="message-meta__time">{{time}}</span>
                         </span>
                     </p>
                 </div>
             </div>
         `;
-    }
+  }
 }

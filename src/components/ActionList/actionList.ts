@@ -1,42 +1,38 @@
-import Block from "../../utils/Block";
+import { Block } from '../../modules/Block';
 
-import { IActionList } from "./types";
-
-
+import { IActionList } from './types';
 
 export class ActionList extends Block {
+  static get componentName() : string {
+    return 'ActionList';
+  }
 
-    static get componentName() : string {
-        return 'ActionList';
-    }
+  protected actionClass = 'actions-list__hidden-panel--open';
 
-    protected actionClass = 'actions-list__hidden-panel--open';
+  constructor({ label, position, items }: IActionList) {
+    super({
+      label,
+      position,
+      items,
+      open: () => {
+        const hiddenPanel = this.element.querySelector('.actions-list__hidden-panel') as HTMLElement;
 
-    constructor({label, position, items}: IActionList) {
-        super({
-            label,
-            position,
-            items,
-            open: () => {
-                const hiddenPanel = this.element.querySelector('.actions-list__hidden-panel') as HTMLElement;
+        this.toggle(hiddenPanel);
+      },
+    });
+  }
 
-                this.toggle(hiddenPanel)
-            }
-        });
-    }
+  protected toggle(element: HTMLElement) {
+        element!.classList.toggle(this.actionClass);
+  }
 
-    protected toggle(element: HTMLElement) {
-        element!.classList.toggle(this.actionClass)
-    }
+  get element() {
+    return this._element as HTMLInputElement;
+  }
 
-    get element() {
-        return this._element as HTMLInputElement
-    }
-
-    protected render(): string {
-
-        //language=hbs
-        return `
+  protected render(): string {
+    // language=hbs
+    return `
             <div class="actions-list">
  
                 {{{Button type="button" name=label onClick=open}}}
@@ -50,5 +46,5 @@ export class ActionList extends Block {
                 </div>
             </div>
         `;
-    }
+  }
 }

@@ -1,5 +1,4 @@
-import {IMessagesItem} from "../messagesItem";
-
+import { IMessagesItem } from '../messagesItem';
 
 export type IMessages = {
     items: Array<IMessagesItem>

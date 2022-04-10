@@ -1,15 +1,14 @@
-import Block from "../../utils/Block";
+import { Block } from '../../modules/Block';
 
-//@ts-ignore
-import { IProfileProps } from "./types";
+import { User } from '../../modules/Store/types';
 
-import {User} from "../../modules/Store/types";
-import UserController from "../../controllers/UserController";
-import AuthController from "../../controllers/AuthController";
-import {Router} from "../../modules/Router/Router";
-import {REGEXP} from "../../utils/REGEXP";
+import { UserUpdateData } from '../../api/UserAPI';
 
-import {UserUpdateData} from "../../api/UserAPI";
+import UserController from '../../controllers/UserController';
+import AuthController from '../../controllers/AuthController';
+
+import { REGEXP } from '../../utils/REGEXP';
+import { GLOBAL } from '../../utils/GLOBAL';
 
 export interface ChangePasswordForm {
     oldPassword: string;
@@ -17,273 +16,274 @@ export interface ChangePasswordForm {
     repeatNewPassword: string;
 }
 
-
 export class ProfilePage extends Block {
-    private user: User;
+  private readonly user: User;
 
-    constructor(props: any) {
-        super(props);
+  constructor(props: any) {
+    super(props);
 
-        this.user = props.user;
+    this.user = props.user;
 
-        this.setProfileContent();
-    }
+    this.setProfileContent();
+  }
 
-    getUserDataByProps(data: User) {
-        const {id, avatar, ...userData} = data;
+  getUserDataByProps(data: User) {
+    const { id, avatar, ...userData } = data;
 
-        return userData;
-    }
+    console.log(id, avatar)
 
-    setProfileContent() {
+    return userData;
+  }
 
-        const content = {
-            title: '',
-            header: {
-                image: {
-                    //@ts-ignore
-                    src: 'https://ya-praktikum.tech/api/v2/resources' + this.user.avatar || require('/static/images/profile/profile__image--empty.png')
-                }
+  setProfileContent() {
+    const content = {
+      title: 'Профиль',
+      header: {
+        image: {
+          src: GLOBAL.resourceHost + this.user.avatar,
+        },
+      },
+      body: {
+        userData: this.getUserDataByProps(this.user),
+      },
+      footer: {
+        buttons: [
+          {
+            name: 'Изменить данные',
+            type: 'button',
+            classes: 'button--link link--blue',
+            onClick: this.setUserSettings.bind(this),
+          },
+          {
+            name: 'Изменить аватар',
+            type: 'button',
+            classes: 'button--link link--blue',
+            onClick: this.setAvatarSettings.bind(this),
+          },
+          {
+            name: 'Изменить пароль',
+            type: 'button',
+            classes: 'button--link link--blue',
+            onClick: this.setPasswordSettings.bind(this),
+          },
+          {
+            name: 'Выйти',
+            type: 'button',
+            classes: 'button--link link--red',
+            onClick: this.logOut.bind(this),
+          },
+        ],
+      },
+      navigation: {
+        link: {
+          label: 'Назад',
+          href: '/messenger',
+          classes: 'profile-panel__link',
+        },
+      },
+    };
+
+    this.setProps(content);
+  }
+
+  setUserSettings() {
+    const content = {
+      title: 'Изменить данные',
+      header: {},
+      body: {
+        form: {
+          inputs: [
+            {
+              name: 'email',
+              type: 'email',
+              display_name: 'Почта',
+              validity: REGEXP.EMAIL,
+              value: this.user.email,
+              required: true,
             },
-            body: {
-                userData: this.getUserDataByProps(this.user)
+            {
+              name: 'login',
+              type: 'text',
+              display_name: 'Логин',
+              validity: REGEXP.LOGIN,
+              value: this.user.login,
+              required: true,
             },
-            footer: {
-                buttons: [{
-                    name: 'Изменить данные',
-                    type: 'button',
-                    classes: 'button--link link--blue',
-                    onClick: this.setUserSettings.bind(this),
-                }, {
-                    name: 'Изменить аватар',
-                    type: 'button',
-                    classes: 'button--link link--blue',
-                    onClick: this.setAvatarSettings.bind(this),
-                }, {
-                    name: 'Изменить пароль',
-                    type: 'button',
-                    classes: 'button--link link--blue',
-                    onClick: this.setPasswordSettings.bind(this)
-                }, {
-                    name: 'Выйти',
-                    type: 'button',
-                    classes: 'button--link link--red',
-                    onClick: this.logOut.bind(this)
-                }]
+            {
+              name: 'first_name',
+              type: 'text',
+              display_name: 'Имя',
+              validity: REGEXP.NAME,
+              value: this.user.first_name,
+              required: true,
             },
-            navigation: {
-                link: {
-                    label: 'Назад',
-                    href: '/messenger',
-                    classes: 'profile-panel__link',
-                }
-            }
-        }
-
-        this.setProps(content);
-    }
-
-    setUserSettings() {
-        const content = {
-            title: 'Изменить данные',
-            header: {},
-            body: {
-                form: {
-                    inputs: [{
-                        name: 'email',
-                        type: 'email',
-                        display_name: 'Почта',
-                        validity: REGEXP['EMAIL'],
-                        value: this.user.email,
-                        required: true,
-                    }, {
-                        name: 'login',
-                        type: 'text',
-                        display_name: 'Логин',
-                        validity: REGEXP['LOGIN'],
-                        value: this.user.login,
-                        required: true,
-                    }, {
-                        name: 'first_name',
-                        type: 'text',
-                        display_name: 'Имя',
-                        validity: REGEXP['NAME'],
-                        value: this.user.first_name,
-                        required: true,
-                    }, {
-                        name: 'second_name',
-                        type: 'text',
-                        display_name: 'Фамилия',
-                        validity: REGEXP['NAME'],
-                        value: this.user.second_name,
-                        required: true,
-                    }, {
-                        name: 'display_name',
-                        type: 'text',
-                        display_name: 'Имя в чате',
-                        validity: REGEXP['NAME'],
-                        value: this.user.display_name,
-                        required: true,
-                    }, {
-                        name: 'phone',
-                        type: 'text',
-                        display_name: 'Телефон',
-                        validity: REGEXP['PHONE'],
-                        value: this.user.phone,
-                        required: true,
-                    }],
-                    button: {
-                        name: 'Сохранить',
-                        type: 'submit',
-                        classes: ''
-                    },
-                    onSubmit: this.onChangeInfoData.bind(this)
-                }
+            {
+              name: 'second_name',
+              type: 'text',
+              display_name: 'Фамилия',
+              validity: REGEXP.NAME,
+              value: this.user.second_name,
+              required: true,
             },
-            footer: {},
-            navigation: {
-                link: {},
-                button:{
-                    name: 'Назад',
-                    type: 'button',
-                    classes: 'button--link link--gray',
-                    onClick: this.setProfileContent.bind(this),
-                }
-            }
-        }
-
-        this.setProps(content);
-    }
-
-    setAvatarSettings() {
-        const content = {
-            title: 'Изменить аватар',
-            header: {},
-            body: {
-                form: {
-                    inputs: [{
-                        name: 'avatar',
-                        type: 'file',
-                        display_name: 'Аватар',
-                        accept: 'image/*',
-                        required: true,
-                    }],
-                    button: {
-                        name: 'Сохранить',
-                        type: 'submit',
-                        classes: ''
-                    },
-                    onSubmit: this.onChangeAvatarData.bind(this)
-                }
+            {
+              name: 'display_name',
+              type: 'text',
+              display_name: 'Имя в чате',
+              validity: REGEXP.NAME,
+              value: this.user.display_name,
+              required: true,
             },
-            footer: {},
-            navigation: {
-                link: {},
-                button:{
-                    name: 'Назад',
-                    type: 'button',
-                    classes: 'button--link link--gray',
-                    onClick: this.setProfileContent.bind(this),
-                }
-            }
-        }
-
-        this.setProps(content);
-    }
-
-    setPasswordSettings() {
-        const content = {
-            title: 'Изменить пароль',
-            header: {},
-            body: {
-                form: {
-                    inputs: [{
-                        name: 'oldPassword',
-                        type: 'password',
-                        display_name: 'Старый пароль',
-                        value: '',
-                        required: true,
-                    }, {
-                        name: 'newPassword',
-                        type: 'password',
-                        display_name: 'Новый пароль',
-                        value: '',
-                        required: true,
-                    }, {
-                        name: 'repeatNewPassword',
-                        type: 'password',
-                        display_name: 'Повторите новый пароль',
-                        value: '',
-                        required: true,
-                    }],
-                    button: {
-                        name: 'Сохранить',
-                        type: 'submit',
-                        classes: ''
-                    },
-                    onSubmit: this.onChangePasswordData.bind(this)
-                }
+            {
+              name: 'phone',
+              type: 'text',
+              display_name: 'Телефон',
+              validity: REGEXP.PHONE,
+              value: this.user.phone,
+              required: true,
             },
-            footer: {},
-            navigation: {
-                link:{},
-                button:{
-                    name: 'Назад',
-                    type: 'button',
-                    classes: 'button--link link--gray',
-                    onClick: this.setProfileContent.bind(this),
-                },
-            }
-        }
+          ],
+          button: {
+            name: 'Сохранить',
+            type: 'submit',
+            classes: '',
+          },
+          onSubmit: this.onChangeInfoData.bind(this),
+        },
+      },
+      footer: {},
+      navigation: {
+        link: {},
+        button: {
+          name: 'Назад',
+          type: 'button',
+          classes: 'button--link link--gray',
+          onClick: this.setProfileContent.bind(this),
+        },
+      },
+    };
 
-        this.setProps(content);
-    }
+    this.setProps(content);
+  }
 
-    async onChangePasswordData(data: ChangePasswordForm) {
-        await UserController.updatePassword(data);
-    }
+  setAvatarSettings() {
+    const content = {
+      title: 'Изменить аватар',
+      header: {},
+      body: {
+        form: {
+          inputs: [
+            {
+              name: 'avatar',
+              type: 'file',
+              display_name: 'Аватар',
+              accept: 'image/*',
+              required: true,
+            },
+          ],
+          button: {
+            name: 'Сохранить',
+            type: 'submit',
+            classes: '',
+          },
+          onSubmit: this.onChangeAvatarData.bind(this),
+        },
+      },
+      footer: {},
+      navigation: {
+        link: {},
+        button: {
+          name: 'Назад',
+          type: 'button',
+          classes: 'button--link link--gray',
+          onClick: this.setProfileContent.bind(this),
+        },
+      },
+    };
 
-    async onChangeAvatarData(file: Record<string, File>) {
-        const user = await UserController.updateAvatar(file.avatar);
+    this.setProps(content);
+  }
 
-        //@ts-ignore
-        this.user = user;
-        this.setProfileContent()
-    }
+  setPasswordSettings() {
+    const content = {
+      title: 'Изменить пароль',
+      header: {},
+      body: {
+        form: {
+          inputs: [
+            {
+              name: 'oldPassword',
+              type: 'password',
+              display_name: 'Старый пароль',
+              value: '',
+              required: true,
+            },
+            {
+              name: 'newPassword',
+              type: 'password',
+              display_name: 'Новый пароль',
+              value: '',
+              required: true,
+            },
+            {
+              name: 'repeatNewPassword',
+              type: 'password',
+              display_name: 'Повторите новый пароль',
+              value: '',
+              required: true,
+            },
+          ],
+          button: {
+            name: 'Сохранить',
+            type: 'submit',
+            classes: '',
+          },
+          onSubmit: this.onChangePasswordData.bind(this),
+        },
+      },
+      footer: {},
+      navigation: {
+        link: {},
+        button: {
+          name: 'Назад',
+          type: 'button',
+          classes: 'button--link link--gray',
+          onClick: this.setProfileContent.bind(this),
+        },
+      },
+    };
 
-    async onChangeInfoData(data: UserUpdateData) {
+    this.setProps(content);
+  }
 
-        const user =  await UserController.updateUser(data)
+  async onChangePasswordData(data: ChangePasswordForm) {
+    await UserController.updatePassword(data);
+  }
 
-        //@ts-ignore
-        this.user = user;
-        this.setProfileContent()
-    }
+  async onChangeAvatarData(file: Record<string, File>) {
+    await UserController.updateAvatar(file.avatar);
 
-    async logOut() {
-        try {
-            await AuthController.logOut();
+    this.setProfileContent();
+  }
 
-            const router = new Router('#app');
+  async onChangeInfoData(data: UserUpdateData) {
+    await UserController.updateUser(data);
 
-            router.go('/signIn')
+    this.setProfileContent();
+  }
 
-        } catch (e) {
-            console.log('profile logOut error', e);
-        }
+  async logOut() {
+    await AuthController.logOut();
+  }
 
-    }
-
-    render() {
-
-        //language=hbs
-        return `
+  render() {
+    // language=hbs
+    return `
             <div class="profile">
                 <div class="profile-information">
                     <div class="profile-information__container">
 
                         <div class="profile-information__head">
-                            {{#if header.image}}
+                            {{#if header.image.src}}
                                 <div class="profile-information__avatar-container">
                                     <img src="{{header.image.src}}" width="40px" height="40px" alt="Avatar">
                                 </div>
@@ -356,9 +356,8 @@ export class ProfilePage extends Block {
                     {{#if navigation.button}}
                         {{{Button type=navigation.button.type name=navigation.button.name classes=navigation.button.classes onClick=navigation.button.onClick}}}
                     {{/if}}
-                     
                 </div>
             </div>
         `;
-    }
+  }
 }

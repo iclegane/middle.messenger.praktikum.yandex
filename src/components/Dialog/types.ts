@@ -1,8 +1,11 @@
-import {IDialogMessage} from "../DialogMessage/types";
+import { IDialogMessage } from '../DialogMessage';
+
+export type Group = {
+    time: string,
+    messages: IDialogMessage,
+}
 
 export type IDialog = {
-    groups: [{
-        date: string,
-        messages: Array<IDialogMessage>;
-    }]
+    messages: Array<IDialogMessage>;
+    groups: Array<Group>
 }

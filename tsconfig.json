@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -15,6 +14,19 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@modules": ["./modules/*"],
+      "@components": ["./components/*"],
+      "@utils": ["./utils/*"],
+      "@static": ["./static/*"],
+    },
+    "types": [
+      "webpack",
+      "webpack-env",
+      "mocha",
+      "chai",
+    ]
   }
 }

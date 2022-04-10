@@ -1,40 +1,69 @@
-import AuthAPI, {SignInDate, SignUpDate} from "../api/AuthAPI";
-import store from "../modules/Store/Store";
-import {Router} from "../modules/Router/Router";
+import AuthAPI, { SignInDate, SignUpDate } from '../api/AuthAPI';
+import store from '../modules/Store/Store';
+import Router from '../modules/Router/Router';
 
 class AuthController {
+  private api: AuthAPI;
 
-    private api: AuthAPI;
+  constructor() {
+    this.api = new AuthAPI();
+  }
 
-    constructor() {
-        this.api = new AuthAPI();
+  async signUp(data: SignUpDate) {
+    try {
+      await this.api.signUp(data);
+
+      const router = new Router('#app');
+      router.go('/messenger');
+    } catch (e: any) {
+      store.set('error', {
+        message: e.reason,
+      });
+
+      throw new Error(e.reason);
     }
+  }
 
-    async signUp(data: SignUpDate) {
-        await this.api.signUp(data);
+  async signIn(data: SignInDate) {
+    try {
+      await this.api.signIn(data);
+      await this.getUser();
 
-        const router = new Router('#app');
-        router.go('/messenger');
+      const router = new Router('#app');
+      router.go('/messenger');
+    } catch (e: any) {
+      store.set('error', {
+        message: e.reason,
+      });
+
+      throw new Error(e.reason);
     }
+  }
 
-    async signIn(data: SignInDate) {
-        await this.api.signIn(data);
+  async logOut() {
+    try {
+      await this.api.logOut();
 
-        await this.getUser();
+      const router = new Router('#app');
+      router.go('/signIn');
+    } catch (e: any) {
+      store.set('error', {
+        message: e.reason,
+      });
 
-        const router = new Router('#app');
-        router.go('/messenger');
+      throw new Error(e.reason);
     }
+  }
 
-    async logOut() {
-        await this.api.logOut();
+  async getUser() {
+    try {
+      const user = await this.api.getUser();
+
+      store.set('user', user);
+    } catch (e: any) {
+      throw new Error(e.reason);
     }
-
-    async getUser() {
-        const user = await this.api.getUser();
-
-        store.set('user', user)
-    }
+  }
 }
 
 export default new AuthController();

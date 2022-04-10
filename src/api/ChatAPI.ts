@@ -1,18 +1,27 @@
-import BaseAPI from "./BaseAPI";
-
+import BaseAPI from './BaseAPI';
 
 export interface createChatData {
     title: string;
 }
 
-
 export type getChatsResponse = {
     id: number;
     title: string;
     avatar: string | null;
-    created_by: number;
     unread_count: number;
-    last_message: null;
+    last_message: lastMessage | null;
+}
+export type lastMessage = {
+    user: {
+        first_name: string;
+        second_name: string;
+        avatar: string | null;
+        email: string;
+        login: string;
+        phone: string;
+    };
+    time: string;
+    content: string;
 }
 
 export type addUserToChatData = {
@@ -20,7 +29,7 @@ export type addUserToChatData = {
     chatId: number;
 }
 
-export type deleteUserFromChatData  = {
+export type deleteUserFromChatData = {
     users: Array<number>;
     chatId: number;
 }
@@ -34,45 +43,37 @@ export type ChatID = {
 }
 
 export default class ChatAPI extends BaseAPI {
+  constructor() {
+    super('/chats');
+  }
 
-    constructor() {
-        super('/chats');
-    }
+  getChats(): Promise<Array<getChatsResponse>> {
+    return this.http.get('', {});
+  }
 
-    getChats(): Promise<Array<getChatsResponse>> {
-        return this.http.get('', {
+  addUserToChat(data: addUserToChatData): Promise<unknown> {
+    return this.http.put('/users', {
+      data,
+    });
+  }
 
-        });
-    }
+  deleteUserFromChat(data: deleteUserFromChatData): Promise<unknown> {
+    return this.http.delete('/users', {
+      data,
+    });
+  }
 
-    addUserToChat(data: addUserToChatData): Promise<unknown> {
-        return this.http.put('/users', {
-            data
-        })
-    }
+  createChat(data: createChatData): Promise<unknown> {
+    return this.http.post('', {
+      data,
+    });
+  }
 
-    deleteUserFromChat(data: deleteUserFromChatData): Promise<unknown> {
-        return this.http.delete('/users', {
-            data
-        })
-    }
+  getToken(data: ChatID): Promise<Token> {
+    const path = `/token/${data.id}`;
 
-    createChat(data: createChatData): Promise<unknown> {
-        return this.http.post('', {
-            data
-        })
-    }
+    return this.http.post(path, {
 
-    getToken(data: ChatID): Promise<Token> {
-        const path  = '/token/' + data.id;
-
-        return this.http.post(path, {
-
-        })
-    }
-
-    create = undefined;
-    read = undefined;
-    update = undefined;
-    delete = undefined;
+    });
+  }
 }

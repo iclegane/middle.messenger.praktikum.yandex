@@ -1,6 +1,5 @@
-import BaseAPI from "./BaseAPI";
-import {User} from "../modules/Store/types";
-
+import BaseAPI from './BaseAPI';
+import { User } from '../modules/Store/types';
 
 export interface UserUpdateData {
     first_name?: string;
@@ -21,40 +20,32 @@ export interface searchUserProps {
 }
 
 export default class UserAPI extends BaseAPI {
+  constructor() {
+    super('/user');
+  }
 
-    constructor() {
-        super('/user');
-    }
+  updateUser(data: UserUpdateData): Promise<unknown> {
+    return this.http.put('/profile', {
+      data,
+    });
+  }
 
+  updateUserPassword(data: UserUpdatePassword): Promise<unknown> {
+    return this.http.put('/password', {
+      data,
+    });
+  }
 
-    updateUser(data: UserUpdateData): Promise<unknown> {
-        return this.http.put('/profile', {
-            data: data,
-        })
-    }
+  updateUserAvatar(data: FormData): Promise<unknown> {
+    return this.http.put('/profile/avatar', {
+      data,
+      formData: true,
+    });
+  }
 
-    updateUserPassword(data: UserUpdatePassword): Promise<unknown> {
-        return this.http.put('/password', {
-            data: data,
-        })
-    }
-
-    updateUserAvatar(data: FormData): Promise<unknown> {
-        return this.http.put('/profile/avatar', {
-            data: data,
-            formData: true,
-        })
-    }
-
-    search(data: searchUserProps): Promise<Array<User>> {
-        return this.http.post('/search', {
-            data: data,
-        })
-    }
-
-
-    create = undefined;
-    update = undefined;
-    read = undefined;
-    delete = undefined;
+  search(data: searchUserProps): Promise<Array<User>> {
+    return this.http.post('/search', {
+      data,
+    });
+  }
 }

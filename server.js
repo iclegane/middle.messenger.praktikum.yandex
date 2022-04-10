@@ -3,12 +3,14 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
- 
-const PORT = 3000;
+
+
 
 app.use(express.static(path.resolve('dist')));
-app.use(fallback('index.html', { root: 'dist' }))
+app.use(fallback('index.html', { root: 'dist' }));
 
-app.listen(PORT, function () {
-    console.log(`App listening on port ${PORT}!`);
-}); 
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}!`);
+});

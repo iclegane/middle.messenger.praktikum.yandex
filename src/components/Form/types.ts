@@ -1,6 +1,6 @@
-import {IInputProps} from "../Input";
-import {IButtonProps} from "../Button";
-import {ILinkProps} from "../Link";
+import { IInputProps } from '../Input';
+import { IButtonProps } from '../Button';
+import { ILinkProps } from '../Link';
 
 export type IFormProps = {
     onInput?: () => void;

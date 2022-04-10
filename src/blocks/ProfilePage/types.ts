@@ -1,13 +1,13 @@
-import { IFormProps } from "../../components/Form";
-import { ILinkProps } from "../../components/Link";
-import {IButtonProps} from "../../components/Button";
+import { IFormProps } from '../../components/Form';
+import { ILinkProps } from '../../components/Link';
+import { IButtonProps } from '../../components/Button';
 
 export type IProfileProps = {
     title: string;
     header?: {
         image?: {
             src: string;
-        }
+        },
     },
     body?: {
         userData?: Array<Record<string, unknown>>;
@@ -18,7 +18,7 @@ export type IProfileProps = {
         buttons: Array<IButtonProps>;
     },
     navigation?: {
-        link: ILinkProps,
-        button: IButtonProps,
-    };
-}
+        link: ILinkProps;
+        button: IButtonProps;
+    },
+};
